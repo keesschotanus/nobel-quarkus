@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <!-- Countries table (cnt) -->
+  <changeSet id="countries-ddl" author="kees">
+    <createTable tableName="countries">
+      <column name="id" type="int">
+        <constraints primaryKey="true" primaryKeyName="countries-pk"/>
+      </column>
+      <!-- ISO-3166 code -->
+      <column name="code" type="CHAR(2)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="nationality" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addUniqueConstraint
+        tableName="countries"
+        columnNames="code"
+        constraintName="cnt-code-u"
+    />
+  </changeSet>
+
+  <!-- users table (usr) -->
+  <changeSet id="users-ddl" author="kees">
+    <createTable tableName="users">
+      <column name="id" type="int">
+        <constraints primaryKey="true" primaryKeyName="users-pk"/>
+      </column>
+      <column name="version" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="active" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="email" type="varchar(60)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdAt" type="timestamp with timezone" defaultValueDate="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdById" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedAt" type="timestamp with timezone">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedById" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="users"
+      baseColumnNames="createdById"
+      referencedColumnNames="id"
+      referencedTableName="users"
+      constraintName="usr-usr-createdBy-fk"
+    />
+    <addForeignKeyConstraint
+      baseTableName="users"
+      baseColumnNames="lastModifiedById"
+      referencedColumnNames="id"
+      referencedTableName="users"
+      constraintName="usr-usr-modifiedBy-fk"
+    />
+  </changeSet>
+
+  <!-- Nobel prize categories table (npc) -->
+  <changeSet id="nobel-prize-categories-ddl" author="kees">
+    <createTable tableName="nobel-prize-categories">
+      <column name="id" type="int">
+        <constraints primaryKey="true"  primaryKeyName="nobel-prize-categories-pk"/>
+      </column>
+      <column name="description" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="nobel-prize-categories-dml" author="kees">
+    <insert tableName="nobel-prize-categories">
+      <column name="id" value="1" />
+      <column name="description" value="Physics" />
+    </insert>
+    <insert tableName="nobel-prize-categories">
+      <column name="id" value="2" />
+      <column name="description" value="Chemistry" />
+    </insert>
+    <insert tableName="nobel-prize-categories">
+      <column name="id" value="3" />
+      <column name="description" value="Physiology or medicine" />
+    </insert>
+    <insert tableName="nobel-prize-categories">
+      <column name="id" value="4" />
+      <column name="description" value="Literature" />
+    </insert>
+    <insert tableName="nobel-prize-categories">
+      <column name="id" value="5" />
+      <column name="description" value="Peace" />
+    </insert>
+    <insert tableName="nobel-prize-categories">
+      <column name="id" value="6" />
+      <column name="description" value="Economy" />
+    </insert>
+  </changeSet>
+
+  <!-- Nobel prizes table (np) -->
+  <changeSet id="nobel-prizes-ddl" author="kees">
+    <createTable tableName="nobel-prizes">
+      <column  name="id"  type="int">
+        <constraints primaryKey="true"  primaryKeyName="nobel-prizes-pk"/>
+      </column>
+      <column name="version" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="categoryId" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="year" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="url" type="varchar(1024)"/>
+      <column name="createdAt" type="timestamp with timezone" defaultValueDate="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdById" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedAt" type="timestamp with timezone">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedById" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="nobel-prizes"
+      baseColumnNames="categoryId"
+      referencedColumnNames="id"
+      referencedTableName="nobel-prize-categories"
+      constraintName="np-npc-fk"
+      onDelete="CASCADE"
+    />
+    <addForeignKeyConstraint
+      baseTableName="users"
+      baseColumnNames="createdById"
+      referencedColumnNames="id"
+      referencedTableName="users"
+      constraintName="np-usr-createdBy-fk"
+    />
+    <addForeignKeyConstraint
+      baseTableName="nobel-prizes"
+      baseColumnNames="lastModifiedById"
+      referencedColumnNames="id"
+      referencedTableName="users"
+      constraintName="np-usr-modifiedBy-fk"
+    />
+    <addUniqueConstraint
+      tableName="nobel-prizes"
+      columnNames="year, categoryId"
+      constraintName="np-year-cat-u"
+    />
+    <createIndex
+        indexName="np-npc-idx"
+        tableName="nobel-prizes">
+      <column name="categoryId"/>
+    </createIndex>
+  </changeSet>
+
+  <!-- persons table (prs) -->
+  <changeSet id="persons-ddl" author="kees">
+    <createTable tableName="persons">
+      <column  name="id"  type="int">
+        <constraints primaryKey="true" primaryKeyName="persons-pk"/>
+      </column>
+      <column name="version" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="displayName" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="text"/>
+      <column name="birthDate" type="date">
+        <constraints nullable="false"/>
+      </column>
+      <column name="birthCountryId" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="deathDate" type="date"/>
+      <column name="url" type="varchar(1024)"/>
+      <column name="createdAt" type="timestamp with timezone" defaultValueDate="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdById" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedAt" type="timestamp with timezone">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedById" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint
+        baseTableName="persons"
+        baseColumnNames="birthCountryId"
+        referencedColumnNames="id"
+        referencedTableName="countries"
+        constraintName="prs-ctr-fk"
+    />
+    <addForeignKeyConstraint
+        baseTableName="persons"
+        baseColumnNames="createdById"
+        referencedColumnNames="id"
+        referencedTableName="users"
+        constraintName="prs-usr-createdBy-fk"
+    />
+    <addForeignKeyConstraint
+        baseTableName="persons"
+        baseColumnNames="lastModifiedById"
+        referencedColumnNames="id"
+        referencedTableName="users"
+        constraintName="prs-usr-modifiedBy-fk"
+    />
+    <createIndex
+        indexName="prs-ctr-idx"
+        tableName="persons">
+      <column name="birthCountryId"/>
+    </createIndex>
+  </changeSet>
+
+  <!--
+    Organizations table (org)
+    Organizations can only win the peace prize.
+  -->
+  <changeSet id="organizations-ddl" author="kees">
+    <createTable tableName="organizations">
+      <column  name="id"  type="int">
+        <constraints primaryKey="true" primaryKeyName="organizations-pk"/>
+      </column>
+      <column name="version" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="text"/>
+      <column name="url" type="varchar(1024)"/>
+      <column name="createdAt" type="timestamp with timezone" defaultValueDate="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdById" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedAt" type="timestamp with timezone">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedById" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint
+        baseTableName="organizations"
+        baseColumnNames="createdById"
+        referencedColumnNames="id"
+        referencedTableName="users"
+        constraintName="org-usr-createdBy-fk"
+    />
+    <addForeignKeyConstraint
+        baseTableName="organizations"
+        baseColumnNames="lastModifiedById"
+        referencedColumnNames="id"
+        referencedTableName="users"
+        constraintName="org-usr-modifiedBy-fk"
+    />
+  </changeSet>
+
+  <!-- Nobel prize laureates table (npl) -->
+  <changeSet id="nobel-prize-laureates-ddl" author="kees">
+    <createTable tableName="nobel-prize-laureates">
+      <column name="id" type="int">
+        <constraints primaryKey="true" primaryKeyName="nobel-prize-laureates-pk"/>
+      </column>
+      <column name="version" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="nobelPrizeId" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="personId" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="organizationId" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="text"/>
+      <column name="fractionNominator" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="fractionDenominator" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdAt" type="timestamp with timezone" defaultValueDate="now()">
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdById" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedAt" type="timestamp with timezone">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastModifiedById" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint
+        baseTableName="nobel-prize-laureates"
+        baseColumnNames="nobelPrizeId"
+        referencedColumnNames="id"
+        referencedTableName="nobel-prizes"
+        constraintName="npl-np-fk"
+    />
+    <addForeignKeyConstraint
+        baseTableName="nobel-prize-laureates"
+        baseColumnNames="personId"
+        referencedColumnNames="id"
+        referencedTableName="persons"
+        constraintName="npl-prs-fk"
+    />
+    <addForeignKeyConstraint
+        baseTableName="nobel-prize-laureates"
+        baseColumnNames="organizationId"
+        referencedColumnNames="id"
+        referencedTableName="organizations"
+        constraintName="npl-org-fk"
+    />
+    <addForeignKeyConstraint
+        baseTableName="nobel-prize-laureates"
+        baseColumnNames="createdById"
+        referencedColumnNames="id"
+        referencedTableName="users"
+        constraintName="npl-usr-createdBy-fk"
+    />
+    <addForeignKeyConstraint
+        baseTableName="nobel-prize-laureates"
+        baseColumnNames="lastModifiedById"
+        referencedColumnNames="id"
+        referencedTableName="users"
+        constraintName="npl-usr-modifiedBy-fk"
+    />
+    <!--
+      Note: Liquibase uses case-sensitive table/column names when double-quoted.
+      The quotes below are necessary to address the existing table/columns.
+    -->
+    <sql>
+      ALTER TABLE "nobel-prize-laureates"
+      ADD CONSTRAINT "npl-person-or-org-chk"
+      CHECK (
+        NOT ("personId" IS NULL AND "organizationId" IS NULL)
+      );
+    </sql>
+    <createIndex
+        indexName="npl-np-idx"
+        tableName="nobel-prize-laureates">
+      <column name="nobelPrizeId"/>
+    </createIndex>
+    <createIndex
+        indexName="npl-prs-idx"
+        tableName="nobel-prize-laureates">
+      <column name="personId"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
