@@ -6,10 +6,10 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
   <!-- Countries table (cnt) -->
-  <changeSet id="countries-ddl" author="kees">
-    <createTable tableName="countries">
-      <column name="id" type="int">
-        <constraints primaryKey="true" primaryKeyName="countries-pk"/>
+  <changeSet id="country-ddl" author="kees">
+    <createTable tableName="country">
+      <column name="id" type="int" autoIncrement="true">
+        <constraints primaryKey="true" primaryKeyName="country-pk"/>
       </column>
       <!-- ISO-3166 code -->
       <column name="code" type="CHAR(2)">
@@ -23,17 +23,19 @@
       </column>
     </createTable>
     <addUniqueConstraint
-        tableName="countries"
+        tableName="country"
         columnNames="code"
         constraintName="cnt-code-u"
     />
   </changeSet>
 
-  <!-- users table (usr) -->
-  <changeSet id="users-ddl" author="kees">
-    <createTable tableName="users">
+  <include file="countries-dml.xml" relativeToChangelogFile="true"/>
+
+  <!-- user table (usr) -->
+  <changeSet id="user-ddl" author="kees">
+    <createTable tableName="user">
       <column name="id" type="int">
-        <constraints primaryKey="true" primaryKeyName="users-pk"/>
+        <constraints primaryKey="true" primaryKeyName="user-pk"/>
       </column>
       <column name="version" type="int">
         <constraints nullable="false"/>
@@ -61,65 +63,78 @@
       </column>
     </createTable>
     <addForeignKeyConstraint
-      baseTableName="users"
+      baseTableName="user"
       baseColumnNames="createdById"
       referencedColumnNames="id"
-      referencedTableName="users"
+      referencedTableName="user"
       constraintName="usr-usr-createdBy-fk"
     />
     <addForeignKeyConstraint
-      baseTableName="users"
+      baseTableName="user"
       baseColumnNames="lastModifiedById"
       referencedColumnNames="id"
-      referencedTableName="users"
+      referencedTableName="user"
       constraintName="usr-usr-modifiedBy-fk"
     />
   </changeSet>
 
-  <!-- Nobel prize categories table (npc) -->
-  <changeSet id="nobel-prize-categories-ddl" author="kees">
-    <createTable tableName="nobel-prize-categories">
+  <!-- Nobel prize category table (npc) -->
+  <changeSet id="nobel-prize-category-ddl" author="kees">
+    <createTable tableName="nobel-prize-category">
       <column name="id" type="int">
-        <constraints primaryKey="true"  primaryKeyName="nobel-prize-categories-pk"/>
+        <constraints primaryKey="true"  primaryKeyName="nobel-prize-category-pk"/>
+      </column>
+      <column name="code" type="char(3)">
       </column>
       <column name="description" type="VARCHAR(50)">
         <constraints nullable="false"/>
       </column>
     </createTable>
+    <addUniqueConstraint
+        tableName="nobel-prize-category"
+        columnNames="code"
+        constraintName="npc-code-u"
+    />
   </changeSet>
 
-  <changeSet id="nobel-prize-categories-dml" author="kees">
-    <insert tableName="nobel-prize-categories">
+  <changeSet id="nobel-prize-category-dml" author="kees">
+    <insert tableName="nobel-prize-category">
       <column name="id" value="1" />
+      <column name="code" value="P" />
       <column name="description" value="Physics" />
     </insert>
-    <insert tableName="nobel-prize-categories">
+    <insert tableName="nobel-prize-category">
       <column name="id" value="2" />
+      <column name="code" value="C" />
       <column name="description" value="Chemistry" />
     </insert>
-    <insert tableName="nobel-prize-categories">
+    <insert tableName="nobel-prize-category">
       <column name="id" value="3" />
+      <column name="code" value="M" />
       <column name="description" value="Physiology or medicine" />
     </insert>
-    <insert tableName="nobel-prize-categories">
+    <insert tableName="nobel-prize-category">
       <column name="id" value="4" />
+      <column name="code" value="L" />
       <column name="description" value="Literature" />
     </insert>
-    <insert tableName="nobel-prize-categories">
+    <insert tableName="nobel-prize-category">
       <column name="id" value="5" />
+      <column name="code" value="PC" />
       <column name="description" value="Peace" />
     </insert>
-    <insert tableName="nobel-prize-categories">
+    <insert tableName="nobel-prize-category">
       <column name="id" value="6" />
+      <column name="code" value="E" />
       <column name="description" value="Economy" />
     </insert>
   </changeSet>
 
-  <!-- Nobel prizes table (np) -->
-  <changeSet id="nobel-prizes-ddl" author="kees">
-    <createTable tableName="nobel-prizes">
+  <!-- Nobel prize table (np) -->
+  <changeSet id="nobel-prize-ddl" author="kees">
+    <createTable tableName="nobel-prize">
       <column  name="id"  type="int">
-        <constraints primaryKey="true"  primaryKeyName="nobel-prizes-pk"/>
+        <constraints primaryKey="true"  primaryKeyName="nobel-prize-pk"/>
       </column>
       <column name="version" type="int">
         <constraints nullable="false"/>
@@ -145,44 +160,44 @@
       </column>
     </createTable>
     <addForeignKeyConstraint
-      baseTableName="nobel-prizes"
+      baseTableName="nobel-prize"
       baseColumnNames="categoryId"
       referencedColumnNames="id"
-      referencedTableName="nobel-prize-categories"
+      referencedTableName="nobel-prize-category"
       constraintName="np-npc-fk"
       onDelete="CASCADE"
     />
     <addForeignKeyConstraint
-      baseTableName="users"
+      baseTableName="user"
       baseColumnNames="createdById"
       referencedColumnNames="id"
-      referencedTableName="users"
+      referencedTableName="user"
       constraintName="np-usr-createdBy-fk"
     />
     <addForeignKeyConstraint
-      baseTableName="nobel-prizes"
+      baseTableName="nobel-prize"
       baseColumnNames="lastModifiedById"
       referencedColumnNames="id"
-      referencedTableName="users"
+      referencedTableName="user"
       constraintName="np-usr-modifiedBy-fk"
     />
     <addUniqueConstraint
-      tableName="nobel-prizes"
+      tableName="nobel-prize"
       columnNames="year, categoryId"
       constraintName="np-year-cat-u"
     />
     <createIndex
         indexName="np-npc-idx"
-        tableName="nobel-prizes">
+        tableName="nobel-prize">
       <column name="categoryId"/>
     </createIndex>
   </changeSet>
 
-  <!-- persons table (prs) -->
-  <changeSet id="persons-ddl" author="kees">
-    <createTable tableName="persons">
+  <!-- person table (prs) -->
+  <changeSet id="person-ddl" author="kees">
+    <createTable tableName="person">
       <column  name="id"  type="int">
-        <constraints primaryKey="true" primaryKeyName="persons-pk"/>
+        <constraints primaryKey="true" primaryKeyName="person-pk"/>
       </column>
       <column name="version" type="int">
         <constraints nullable="false"/>
@@ -216,29 +231,29 @@
       </column>
     </createTable>
     <addForeignKeyConstraint
-        baseTableName="persons"
+        baseTableName="person"
         baseColumnNames="birthCountryId"
         referencedColumnNames="id"
-        referencedTableName="countries"
+        referencedTableName="country"
         constraintName="prs-ctr-fk"
     />
     <addForeignKeyConstraint
-        baseTableName="persons"
+        baseTableName="person"
         baseColumnNames="createdById"
         referencedColumnNames="id"
-        referencedTableName="users"
+        referencedTableName="user"
         constraintName="prs-usr-createdBy-fk"
     />
     <addForeignKeyConstraint
-        baseTableName="persons"
+        baseTableName="person"
         baseColumnNames="lastModifiedById"
         referencedColumnNames="id"
-        referencedTableName="users"
+        referencedTableName="user"
         constraintName="prs-usr-modifiedBy-fk"
     />
     <createIndex
         indexName="prs-ctr-idx"
-        tableName="persons">
+        tableName="person">
       <column name="birthCountryId"/>
     </createIndex>
   </changeSet>
@@ -247,10 +262,10 @@
     Organizations table (org)
     Organizations can only win the peace prize.
   -->
-  <changeSet id="organizations-ddl" author="kees">
-    <createTable tableName="organizations">
+  <changeSet id="organization-ddl" author="kees">
+    <createTable tableName="organization">
       <column  name="id"  type="int">
-        <constraints primaryKey="true" primaryKeyName="organizations-pk"/>
+        <constraints primaryKey="true" primaryKeyName="organization-pk"/>
       </column>
       <column name="version" type="int">
         <constraints nullable="false"/>
@@ -274,26 +289,26 @@
       </column>
     </createTable>
     <addForeignKeyConstraint
-        baseTableName="organizations"
+        baseTableName="organization"
         baseColumnNames="createdById"
         referencedColumnNames="id"
-        referencedTableName="users"
+        referencedTableName="user"
         constraintName="org-usr-createdBy-fk"
     />
     <addForeignKeyConstraint
-        baseTableName="organizations"
+        baseTableName="organization"
         baseColumnNames="lastModifiedById"
         referencedColumnNames="id"
-        referencedTableName="users"
+        referencedTableName="user"
         constraintName="org-usr-modifiedBy-fk"
     />
   </changeSet>
 
-  <!-- Nobel prize laureates table (npl) -->
-  <changeSet id="nobel-prize-laureates-ddl" author="kees">
-    <createTable tableName="nobel-prize-laureates">
+  <!-- Nobel prize laureate table (npl) -->
+  <changeSet id="nobel-prize-laureate-ddl" author="kees">
+    <createTable tableName="nobel-prize-laureate">
       <column name="id" type="int">
-        <constraints primaryKey="true" primaryKeyName="nobel-prize-laureates-pk"/>
+        <constraints primaryKey="true" primaryKeyName="nobel-prize-laureate-pk"/>
       </column>
       <column name="version" type="int">
         <constraints nullable="false"/>
@@ -302,10 +317,10 @@
         <constraints nullable="false"/>
       </column>
       <column name="personId" type="int">
-        <constraints nullable="false"/>
+        <constraints nullable="true"/>
       </column>
       <column name="organizationId" type="int">
-        <constraints nullable="false"/>
+        <constraints nullable="true"/>
       </column>
       <column name="description" type="text"/>
       <column name="fractionNominator" type="int">
@@ -328,38 +343,38 @@
       </column>
     </createTable>
     <addForeignKeyConstraint
-        baseTableName="nobel-prize-laureates"
+        baseTableName="nobel-prize-laureate"
         baseColumnNames="nobelPrizeId"
         referencedColumnNames="id"
-        referencedTableName="nobel-prizes"
+        referencedTableName="nobel-prize"
         constraintName="npl-np-fk"
     />
     <addForeignKeyConstraint
-        baseTableName="nobel-prize-laureates"
+        baseTableName="nobel-prize-laureate"
         baseColumnNames="personId"
         referencedColumnNames="id"
-        referencedTableName="persons"
+        referencedTableName="person"
         constraintName="npl-prs-fk"
     />
     <addForeignKeyConstraint
-        baseTableName="nobel-prize-laureates"
+        baseTableName="nobel-prize-laureate"
         baseColumnNames="organizationId"
         referencedColumnNames="id"
-        referencedTableName="organizations"
+        referencedTableName="organization"
         constraintName="npl-org-fk"
     />
     <addForeignKeyConstraint
-        baseTableName="nobel-prize-laureates"
+        baseTableName="nobel-prize-laureate"
         baseColumnNames="createdById"
         referencedColumnNames="id"
-        referencedTableName="users"
+        referencedTableName="user"
         constraintName="npl-usr-createdBy-fk"
     />
     <addForeignKeyConstraint
-        baseTableName="nobel-prize-laureates"
+        baseTableName="nobel-prize-laureate"
         baseColumnNames="lastModifiedById"
         referencedColumnNames="id"
-        referencedTableName="users"
+        referencedTableName="user"
         constraintName="npl-usr-modifiedBy-fk"
     />
     <!--
@@ -367,20 +382,18 @@
       The quotes below are necessary to address the existing table/columns.
     -->
     <sql>
-      ALTER TABLE "nobel-prize-laureates"
+      ALTER TABLE "nobel-prize-laureate"
       ADD CONSTRAINT "npl-person-or-org-chk"
-      CHECK (
-        NOT ("personId" IS NULL AND "organizationId" IS NULL)
-      );
+      CHECK ("personId" IS NOT NULL OR "organizationId" IS NOT NULL);
     </sql>
     <createIndex
         indexName="npl-np-idx"
-        tableName="nobel-prize-laureates">
+        tableName="nobel-prize-laureate">
       <column name="nobelPrizeId"/>
     </createIndex>
     <createIndex
         indexName="npl-prs-idx"
-        tableName="nobel-prize-laureates">
+        tableName="nobel-prize-laureate">
       <column name="personId"/>
     </createIndex>
   </changeSet>

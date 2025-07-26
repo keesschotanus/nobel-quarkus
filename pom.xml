@@ -77,25 +77,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                        <configuration>
-                            <quiet>true</quiet>
-                            <files>
-                                <file>.env</file>
-                            </files>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${quarkus.platform.version}</version>
@@ -148,11 +129,33 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.28.0</version>
                 <executions>
                     <execution>
-                        <id>Generate JOOQ metamodel</id>
+                        <id>liquibase-update</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <changeLogFile>src/main/resources/db/changeLog.xml</changeLogFile>
+                    <url>jdbc:postgresql://localhost:5432/nobel</url>
+                    <username>nobel</username>
+                    <password>nobel</password>
+                    <driver>org.postgresql.Driver</driver>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>3.20.5</version>
+                <executions>
+                    <execution>
+                        <id>JOOQ</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
@@ -160,9 +163,9 @@
                         <configuration>
                             <!-- Configure the database connection here -->
                             <jdbc>
-                                <url>${jdbc.url}</url>
-                                <user>${jdbc.user}</user>
-                                <password>${jdbc.password}</password>
+                                <url>jdbc:postgresql://localhost:5432/nobel</url>
+                                <user>nobel</user>
+                                <password>nobel</password>
                             </jdbc>
                             <generator>
                                 <database>
@@ -174,13 +177,43 @@
                                     <generatedAnnotation>false</generatedAnnotation>
                                     <!-- Uses java time types instead of java.sql.Date -->
                                     <javaTimeTypes>true</javaTimeTypes>
-                                    <daos>true</daos>
                                 </generate>
                                 <target>
                                     <packageName>com.schotanus.nobel</packageName>
                                     <directory>target/generated-sources/data</directory>
                                 </target>
                             </generator>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.14.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-nobel-api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/nobel.yml</inputSpec>
+                            <generatorName>jaxrs-spec</generatorName>
+                            <output>${project.build.directory}/generated-sources/openapi</output>
+                            <apiPackage>com.schotanus.nobel.api</apiPackage>
+                            <modelPackage>com.schotanus.nobel.model</modelPackage>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <configOptions>
+                                <library>quarkus</library>
+                                <useJakartaEe>true</useJakartaEe>
+                                <interfaceOnly>true</interfaceOnly>
+                                <returnResponse>true</returnResponse>
+                                <dateLibrary>java8</dateLibrary>
+                                <useBeanValidation>false</useBeanValidation>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                                <sourceFolder>openapi</sourceFolder>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>

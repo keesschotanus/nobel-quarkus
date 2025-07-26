@@ -1,0 +1,249 @@
+openapi: 3.1.1
+info:
+  title: Nobel Prize API
+  version: 1.0.0
+  summary: This API allows you to maintain Nobel Prize Laureates.
+  description: |
+    # Nobel Prize API
+    This API allows you to maintain Nobel Prize Laureates,
+    using REST services.
+    ## Purpose
+    I created this API just to experiment with Open API, jOOQ, Liquibase and Quarkus.
+servers:
+  - url: http://localhost:8080
+paths:
+  /nobelprizecategories:
+    get:
+      summary: Get all Nobel Prize categories
+      operationId: getNobelPrizeCategories
+      responses:
+        '200':
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NobelPrizeCategory'
+  /nobelprizecategories/{code}:
+    get:
+      summary: Get a single Nobel Prize category by its code
+      operationId: getNobelPrizeCategory
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Nobel Prize category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NobelPrizeCategory'
+  /nobelprizes:
+    get:
+      summary: Get all Nobel prizes
+      operationId: getNobelPrizes
+      parameters:
+        - name: year
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Year the Nobel Prize was awarded
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Category of the Nobel Prize
+      responses:
+        '200':
+          description: List of prizes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NobelPrize'
+  /persons:
+    get:
+      summary: Get all persons
+      responses:
+        '200':
+          description: List of persons
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+  /organizations:
+    get:
+      summary: Get all organizations
+      responses:
+        '200':
+          description: List of organizations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+  /countries:
+    get:
+      summary: Get all countries
+      responses:
+        '200':
+          description: List of countries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Country'
+  /users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+components:
+  schemas:
+    NobelPrizeCategory:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    NobelPrize:
+      type: object
+      properties:
+        category:
+          type: string
+        year:
+          type: integer
+        url:
+          type: string
+        laureates:
+          type: array
+          items:
+            $ref: '#/components/schemas/NobelPrizeLaureate'
+        createdAt:
+          type: string
+          format: date-time
+        createdById:
+          type: integer
+        lastModifiedAt:
+          type: string
+          format: date-time
+        lastModifiedById:
+          type: integer
+    NobelPrizeLaureate:
+      type: object
+      properties:
+        person:
+          $ref: "#/components/schemas/Person"
+        organization:
+          $ref: "#/components/schemas/Organization"
+        description:
+          type: string
+        fractionNominator:
+          type: integer
+        fractionDenominator:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        createdById:
+          type: integer
+        lastModifiedAt:
+          type: string
+          format: date-time
+        lastModifiedById:
+          type: integer
+    Person:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        birthCountryId:
+          type: integer
+        deathDate:
+          type: string
+          format: date
+        url:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdById:
+          type: integer
+        lastModifiedAt:
+          type: string
+          format: date-time
+        lastModifiedById:
+          type: integer
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdById:
+          type: integer
+        lastModifiedAt:
+          type: string
+          format: date-time
+        lastModifiedById:
+          type: integer
+    Country:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        nationality:
+          type: string
+    User:
+      type: object
+      properties:
+        active:
+          type: boolean
+        name:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdById:
+          type: integer
+        lastModifiedAt:
+          type: string
+          format: date-time
+        lastModifiedById:
+          type: integer

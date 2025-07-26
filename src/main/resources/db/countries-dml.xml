@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="countries-dml" author="kees">
+    <insert tableName="country"><column name="code" value="AD"/><column name="name" value="Andorra"/><column name="nationality" value="Andorran"/></insert>
+    <insert tableName="country"><column name="code" value="AE"/><column name="name" value="United Arab Emirates"/><column name="nationality" value="Emirati"/></insert>
+    <insert tableName="country"><column name="code" value="AF"/><column name="name" value="Afghanistan"/><column name="nationality" value="Afghan"/></insert>
+    <insert tableName="country"><column name="code" value="AG"/><column name="name" value="Antigua and Barbuda"/><column name="nationality" value="Antiguan, Barbudan"/></insert>
+    <insert tableName="country"><column name="code" value="AI"/><column name="name" value="Anguilla"/><column name="nationality" value="Anguillian"/></insert>
+    <insert tableName="country"><column name="code" value="AL"/><column name="name" value="Albania"/><column name="nationality" value="Albanian"/></insert>
+    <insert tableName="country"><column name="code" value="AM"/><column name="name" value="Armenia"/><column name="nationality" value="Armenian"/></insert>
+    <insert tableName="country"><column name="code" value="AN"/><column name="name" value="Netherlands Antilles"/><column name="nationality" value="Dutch"/></insert>
+    <insert tableName="country"><column name="code" value="AO"/><column name="name" value="Angola"/><column name="nationality" value="Angolan"/></insert>
+    <insert tableName="country"><column name="code" value="AQ"/><column name="name" value="Antarctica"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="AR"/><column name="name" value="Argentina"/><column name="nationality" value="Argentinean"/></insert>
+    <insert tableName="country"><column name="code" value="AS"/><column name="name" value="American Samoa"/><column name="nationality" value="American Samoan"/></insert>
+    <insert tableName="country"><column name="code" value="AT"/><column name="name" value="Austria"/><column name="nationality" value="Austrian"/></insert>
+    <insert tableName="country"><column name="code" value="AU"/><column name="name" value="Australia"/><column name="nationality" value="Australian"/></insert>
+    <insert tableName="country"><column name="code" value="AW"/><column name="name" value="Aruba"/><column name="nationality" value="Aruban"/></insert>
+    <insert tableName="country"><column name="code" value="AX"/><column name="name" value="Åland Islands"/><column name="nationality" value="Swedish"/></insert>
+    <insert tableName="country"><column name="code" value="AZ"/><column name="name" value="Azerbaijan"/><column name="nationality" value="Azerbaijani"/></insert>
+    <insert tableName="country"><column name="code" value="BA"/><column name="name" value="Bosnia and Herzegovina"/><column name="nationality" value="Bosnian, Herzegovinian"/></insert>
+    <insert tableName="country"><column name="code" value="BB"/><column name="name" value="Barbados"/><column name="nationality" value="Barbadian"/></insert>
+    <insert tableName="country"><column name="code" value="BD"/><column name="name" value="Bangladesh"/><column name="nationality" value="Bangladeshi"/></insert>
+    <insert tableName="country"><column name="code" value="BE"/><column name="name" value="Belgium"/><column name="nationality" value="Belgian"/></insert>
+    <insert tableName="country"><column name="code" value="BF"/><column name="name" value="Burkina Faso"/><column name="nationality" value="Burkinabe"/></insert>
+    <insert tableName="country"><column name="code" value="BG"/><column name="name" value="Bulgaria"/><column name="nationality" value="Bulgarian"/></insert>
+    <insert tableName="country"><column name="code" value="BH"/><column name="name" value="Bahrain"/><column name="nationality" value="Bahraini"/></insert>
+    <insert tableName="country"><column name="code" value="BI"/><column name="name" value="Burundi"/><column name="nationality" value="Burundian"/></insert>
+    <insert tableName="country"><column name="code" value="BJ"/><column name="name" value="Benin"/><column name="nationality" value="Beninese"/></insert>
+    <insert tableName="country"><column name="code" value="BL"/><column name="name" value="Saint Barthélemy"/><column name="nationality" value="Saint Barthélemy Islander"/></insert>
+    <insert tableName="country"><column name="code" value="BM"/><column name="name" value="Bermuda"/><column name="nationality" value="Bermudian"/></insert>
+    <insert tableName="country"><column name="code" value="BN"/><column name="name" value="Brunei"/><column name="nationality" value="Bruneian"/></insert>
+    <insert tableName="country"><column name="code" value="BO"/><column name="name" value="Bolivia"/><column name="nationality" value="Bolivian"/></insert>
+    <insert tableName="country"><column name="code" value="BQ"/><column name="name" value="British Antarctic Territory"/><column name="nationality" value="Dutch"/></insert>
+    <insert tableName="country"><column name="code" value="BR"/><column name="name" value="Brazil"/><column name="nationality" value="Brazilian"/></insert>
+    <insert tableName="country"><column name="code" value="BS"/><column name="name" value="Bahamas"/><column name="nationality" value="Bahamian"/></insert>
+    <insert tableName="country"><column name="code" value="BT"/><column name="name" value="Bhutan"/><column name="nationality" value="Bhutanese"/></insert>
+    <insert tableName="country"><column name="code" value="BV"/><column name="name" value="Bouvet Island"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="BW"/><column name="name" value="Botswana"/><column name="nationality" value="Motswana"/></insert>
+    <insert tableName="country"><column name="code" value="BY"/><column name="name" value="Belarus"/><column name="nationality" value="Belarusian"/></insert>
+    <insert tableName="country"><column name="code" value="BZ"/><column name="name" value="Belize"/><column name="nationality" value="Belizean"/></insert>
+    <insert tableName="country"><column name="code" value="CA"/><column name="name" value="Canada"/><column name="nationality" value="Canadian"/></insert>
+    <insert tableName="country"><column name="code" value="CC"/><column name="name" value="Cocos [Keeling] Islands"/><column name="nationality" value="Cocos Islander"/></insert>
+    <insert tableName="country"><column name="code" value="CD"/><column name="name" value="Congo - Kinshasa"/><column name="nationality" value="Congolese"/></insert>
+    <insert tableName="country"><column name="code" value="CF"/><column name="name" value="Central African Republic"/><column name="nationality" value="Central African"/></insert>
+    <insert tableName="country"><column name="code" value="CG"/><column name="name" value="Congo - Brazzaville"/><column name="nationality" value="Congolese"/></insert>
+    <insert tableName="country"><column name="code" value="CH"/><column name="name" value="Switzerland"/><column name="nationality" value="Swiss"/></insert>
+    <insert tableName="country"><column name="code" value="CI"/><column name="name" value="Côte d’Ivoire"/><column name="nationality" value="Ivorian"/></insert>
+    <insert tableName="country"><column name="code" value="CK"/><column name="name" value="Cook Islands"/><column name="nationality" value="Cook Islander"/></insert>
+    <insert tableName="country"><column name="code" value="CL"/><column name="name" value="Chile"/><column name="nationality" value="Chilean"/></insert>
+    <insert tableName="country"><column name="code" value="CM"/><column name="name" value="Cameroon"/><column name="nationality" value="Cameroonian"/></insert>
+    <insert tableName="country"><column name="code" value="CN"/><column name="name" value="China"/><column name="nationality" value="Chinese"/></insert>
+    <insert tableName="country"><column name="code" value="CO"/><column name="name" value="Colombia"/><column name="nationality" value="Colombian"/></insert>
+    <insert tableName="country"><column name="code" value="CR"/><column name="name" value="Costa Rica"/><column name="nationality" value="Costa Rican"/></insert>
+    <insert tableName="country"><column name="code" value="CS"/><column name="name" value="Serbia and Montenegro"/><column name="nationality" value="Montenegrins, Serbs"/></insert>
+    <insert tableName="country"><column name="code" value="CT"/><column name="name" value="Canton and Enderbury Islands"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="CU"/><column name="name" value="Cuba"/><column name="nationality" value="Cuban"/></insert>
+    <insert tableName="country"><column name="code" value="CV"/><column name="name" value="Cape Verde"/><column name="nationality" value="Cape Verdian"/></insert>
+    <insert tableName="country"><column name="code" value="CW"/><column name="name" value="Curaçao"/><column name="nationality" value="Curaçaoan"/></insert>
+    <insert tableName="country"><column name="code" value="CX"/><column name="name" value="Christmas Island"/><column name="nationality" value="Christmas Island"/></insert>
+    <insert tableName="country"><column name="code" value="CY"/><column name="name" value="Cyprus"/><column name="nationality" value="Cypriot"/></insert>
+    <insert tableName="country"><column name="code" value="CZ"/><column name="name" value="Czech Republic"/><column name="nationality" value="Czech"/></insert>
+    <insert tableName="country"><column name="code" value="DE"/><column name="name" value="Germany"/><column name="nationality" value="German"/></insert>
+    <insert tableName="country"><column name="code" value="DJ"/><column name="name" value="Djibouti"/><column name="nationality" value="Djibouti"/></insert>
+    <insert tableName="country"><column name="code" value="DK"/><column name="name" value="Denmark"/><column name="nationality" value="Danish"/></insert>
+    <insert tableName="country"><column name="code" value="DM"/><column name="name" value="Dominica"/><column name="nationality" value="Dominican"/></insert>
+    <insert tableName="country"><column name="code" value="DO"/><column name="name" value="Dominican Republic"/><column name="nationality" value="Dominican"/></insert>
+    <insert tableName="country"><column name="code" value="DZ"/><column name="name" value="Algeria"/><column name="nationality" value="Algerian"/></insert>
+    <insert tableName="country"><column name="code" value="EC"/><column name="name" value="Ecuador"/><column name="nationality" value="Ecuadorean"/></insert>
+    <insert tableName="country"><column name="code" value="EE"/><column name="name" value="Estonia"/><column name="nationality" value="Estonian"/></insert>
+    <insert tableName="country"><column name="code" value="EG"/><column name="name" value="Egypt"/><column name="nationality" value="Egyptian"/></insert>
+    <insert tableName="country"><column name="code" value="EH"/><column name="name" value="Western Sahara"/><column name="nationality" value="Sahrawi"/></insert>
+    <insert tableName="country"><column name="code" value="ER"/><column name="name" value="Eritrea"/><column name="nationality" value="Eritrean"/></insert>
+    <insert tableName="country"><column name="code" value="ES"/><column name="name" value="Spain"/><column name="nationality" value="Spanish"/></insert>
+    <insert tableName="country"><column name="code" value="ET"/><column name="name" value="Ethiopia"/><column name="nationality" value="Ethiopian"/></insert>
+    <insert tableName="country"><column name="code" value="FI"/><column name="name" value="Finland"/><column name="nationality" value="Finnish"/></insert>
+    <insert tableName="country"><column name="code" value="FJ"/><column name="name" value="Fiji"/><column name="nationality" value="Fijian"/></insert>
+    <insert tableName="country"><column name="code" value="FK"/><column name="name" value="Falkland Islands"/><column name="nationality" value="Falkland Islander"/></insert>
+    <insert tableName="country"><column name="code" value="FM"/><column name="name" value="Micronesia"/><column name="nationality" value="Micronesian"/></insert>
+    <insert tableName="country"><column name="code" value="FO"/><column name="name" value="Faroe Islands"/><column name="nationality" value="Faroese"/></insert>
+    <insert tableName="country"><column name="code" value="FQ"/><column name="name" value="French Southern and Antarctic Territories"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="FR"/><column name="name" value="France"/><column name="nationality" value="French"/></insert>
+    <insert tableName="country"><column name="code" value="FX"/><column name="name" value="Metropolitan France"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="GA"/><column name="name" value="Gabon"/><column name="nationality" value="Gabonese"/></insert>
+    <insert tableName="country"><column name="code" value="GB"/><column name="name" value="United Kingdom"/><column name="nationality" value="British"/></insert>
+    <insert tableName="country"><column name="code" value="GD"/><column name="name" value="Grenada"/><column name="nationality" value="Grenadian"/></insert>
+    <insert tableName="country"><column name="code" value="GE"/><column name="name" value="Georgia"/><column name="nationality" value="Georgian"/></insert>
+    <insert tableName="country"><column name="code" value="GF"/><column name="name" value="French Guiana"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="GG"/><column name="name" value="Guernsey"/><column name="nationality" value="Channel Islander"/></insert>
+    <insert tableName="country"><column name="code" value="GH"/><column name="name" value="Ghana"/><column name="nationality" value="Ghanaian"/></insert>
+    <insert tableName="country"><column name="code" value="GI"/><column name="name" value="Gibraltar"/><column name="nationality" value="Gibraltar"/></insert>
+    <insert tableName="country"><column name="code" value="GL"/><column name="name" value="Greenland"/><column name="nationality" value="Greenlandic"/></insert>
+    <insert tableName="country"><column name="code" value="GM"/><column name="name" value="Gambia"/><column name="nationality" value="Gambian"/></insert>
+    <insert tableName="country"><column name="code" value="GN"/><column name="name" value="Guinea"/><column name="nationality" value="Guinean"/></insert>
+    <insert tableName="country"><column name="code" value="GP"/><column name="name" value="Guadeloupe"/><column name="nationality" value="Guadeloupian"/></insert>
+    <insert tableName="country"><column name="code" value="GQ"/><column name="name" value="Equatorial Guinea"/><column name="nationality" value="Equatorial Guinean"/></insert>
+    <insert tableName="country"><column name="code" value="GR"/><column name="name" value="Greece"/><column name="nationality" value="Greek"/></insert>
+    <insert tableName="country"><column name="code" value="GS"/><column name="name" value="South Georgia and the South Sandwich Islands"/><column name="nationality" value="South Georgia and the South Sandwich Islander"/></insert>
+    <insert tableName="country"><column name="code" value="GT"/><column name="name" value="Guatemala"/><column name="nationality" value="Guatemalan"/></insert>
+    <insert tableName="country"><column name="code" value="GU"/><column name="name" value="Guam"/><column name="nationality" value="Guamanian"/></insert>
+    <insert tableName="country"><column name="code" value="GW"/><column name="name" value="Guinea-Bissau"/><column name="nationality" value="Guinea-Bissauan"/></insert>
+    <insert tableName="country"><column name="code" value="GY"/><column name="name" value="Guyana"/><column name="nationality" value="Guyanese"/></insert>
+    <insert tableName="country"><column name="code" value="HK"/><column name="name" value="Hong Kong SAR China"/><column name="nationality" value="Chinese"/></insert>
+    <insert tableName="country"><column name="code" value="HM"/><column name="name" value="Heard Island and McDonald Islands"/><column name="nationality" value="Heard and McDonald Islander"/></insert>
+    <insert tableName="country"><column name="code" value="HN"/><column name="name" value="Honduras"/><column name="nationality" value="Honduran"/></insert>
+    <insert tableName="country"><column name="code" value="HR"/><column name="name" value="Croatia"/><column name="nationality" value="Croatian"/></insert>
+    <insert tableName="country"><column name="code" value="HT"/><column name="name" value="Haiti"/><column name="nationality" value="Haitian"/></insert>
+    <insert tableName="country"><column name="code" value="HU"/><column name="name" value="Hungary"/><column name="nationality" value="Hungarian"/></insert>
+    <insert tableName="country"><column name="code" value="ID"/><column name="name" value="Indonesia"/><column name="nationality" value="Indonesian"/></insert>
+    <insert tableName="country"><column name="code" value="IE"/><column name="name" value="Ireland"/><column name="nationality" value="Irish"/></insert>
+    <insert tableName="country"><column name="code" value="IL"/><column name="name" value="Israel"/><column name="nationality" value="Israeli"/></insert>
+    <insert tableName="country"><column name="code" value="IM"/><column name="name" value="Isle of Man"/><column name="nationality" value="Manx"/></insert>
+    <insert tableName="country"><column name="code" value="IN"/><column name="name" value="India"/><column name="nationality" value="Indian"/></insert>
+    <insert tableName="country"><column name="code" value="IO"/><column name="name" value="British Indian Ocean Territory"/><column name="nationality" value="Indian"/></insert>
+    <insert tableName="country"><column name="code" value="IQ"/><column name="name" value="Iraq"/><column name="nationality" value="Iraqi"/></insert>
+    <insert tableName="country"><column name="code" value="IR"/><column name="name" value="Iran"/><column name="nationality" value="Iranian"/></insert>
+    <insert tableName="country"><column name="code" value="IS"/><column name="name" value="Iceland"/><column name="nationality" value="Icelander"/></insert>
+    <insert tableName="country"><column name="code" value="IT"/><column name="name" value="Italy"/><column name="nationality" value="Italian"/></insert>
+    <insert tableName="country"><column name="code" value="JE"/><column name="name" value="Jersey"/><column name="nationality" value="Channel Islander"/></insert>
+    <insert tableName="country"><column name="code" value="JM"/><column name="name" value="Jamaica"/><column name="nationality" value="Jamaican"/></insert>
+    <insert tableName="country"><column name="code" value="JO"/><column name="name" value="Jordan"/><column name="nationality" value="Jordanian"/></insert>
+    <insert tableName="country"><column name="code" value="JP"/><column name="name" value="Japan"/><column name="nationality" value="Japanese"/></insert>
+    <insert tableName="country"><column name="code" value="JT"/><column name="name" value="Johnston Island"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="KE"/><column name="name" value="Kenya"/><column name="nationality" value="Kenyan"/></insert>
+    <insert tableName="country"><column name="code" value="KG"/><column name="name" value="Kyrgyzstan"/><column name="nationality" value="Kirghiz"/></insert>
+    <insert tableName="country"><column name="code" value="KH"/><column name="name" value="Cambodia"/><column name="nationality" value="Cambodian"/></insert>
+    <insert tableName="country"><column name="code" value="KI"/><column name="name" value="Kiribati"/><column name="nationality" value="I-Kiribati"/></insert>
+    <insert tableName="country"><column name="code" value="KM"/><column name="name" value="Comoros"/><column name="nationality" value="Comoran"/></insert>
+    <insert tableName="country"><column name="code" value="KN"/><column name="name" value="Saint Kitts and Nevis"/><column name="nationality" value="Kittian and Nevisian"/></insert>
+    <insert tableName="country"><column name="code" value="KP"/><column name="name" value="North Korea"/><column name="nationality" value="North Korean"/></insert>
+    <insert tableName="country"><column name="code" value="KR"/><column name="name" value="South Korea"/><column name="nationality" value="South Korean"/></insert>
+    <insert tableName="country"><column name="code" value="KW"/><column name="name" value="Kuwait"/><column name="nationality" value="Kuwaiti"/></insert>
+    <insert tableName="country"><column name="code" value="KY"/><column name="name" value="Cayman Islands"/><column name="nationality" value="Caymanian"/></insert>
+    <insert tableName="country"><column name="code" value="KZ"/><column name="name" value="Kazakhstan"/><column name="nationality" value="Kazakhstani"/></insert>
+    <insert tableName="country"><column name="code" value="LA"/><column name="name" value="Laos"/><column name="nationality" value="Laotian"/></insert>
+    <insert tableName="country"><column name="code" value="LB"/><column name="name" value="Lebanon"/><column name="nationality" value="Lebanese"/></insert>
+    <insert tableName="country"><column name="code" value="LC"/><column name="name" value="Saint Lucia"/><column name="nationality" value="Saint Lucian"/></insert>
+    <insert tableName="country"><column name="code" value="LI"/><column name="name" value="Liechtenstein"/><column name="nationality" value="Liechtensteiner"/></insert>
+    <insert tableName="country"><column name="code" value="LK"/><column name="name" value="Sri Lanka"/><column name="nationality" value="Sri Lankan"/></insert>
+    <insert tableName="country"><column name="code" value="LR"/><column name="name" value="Liberia"/><column name="nationality" value="Liberian"/></insert>
+    <insert tableName="country"><column name="code" value="LS"/><column name="name" value="Lesotho"/><column name="nationality" value="Mosotho"/></insert>
+    <insert tableName="country"><column name="code" value="LT"/><column name="name" value="Lithuania"/><column name="nationality" value="Lithuanian"/></insert>
+    <insert tableName="country"><column name="code" value="LU"/><column name="name" value="Luxembourg"/><column name="nationality" value="Luxembourger"/></insert>
+    <insert tableName="country"><column name="code" value="LV"/><column name="name" value="Latvia"/><column name="nationality" value="Latvian"/></insert>
+    <insert tableName="country"><column name="code" value="LY"/><column name="name" value="Libya"/><column name="nationality" value="Libyan"/></insert>
+    <insert tableName="country"><column name="code" value="MA"/><column name="name" value="Morocco"/><column name="nationality" value="Moroccan"/></insert>
+    <insert tableName="country"><column name="code" value="MC"/><column name="name" value="Monaco"/><column name="nationality" value="Monegasque"/></insert>
+    <insert tableName="country"><column name="code" value="MD"/><column name="name" value="Moldova"/><column name="nationality" value="Moldovan"/></insert>
+    <insert tableName="country"><column name="code" value="ME"/><column name="name" value="Montenegro"/><column name="nationality" value="Montenegrin"/></insert>
+    <insert tableName="country"><column name="code" value="MF"/><column name="name" value="Saint Martin"/><column name="nationality" value="Saint Martin Islander"/></insert>
+    <insert tableName="country"><column name="code" value="MG"/><column name="name" value="Madagascar"/><column name="nationality" value="Malagasy"/></insert>
+    <insert tableName="country"><column name="code" value="MH"/><column name="name" value="Marshall Islands"/><column name="nationality" value="Marshallese"/></insert>
+    <insert tableName="country"><column name="code" value="MI"/><column name="name" value="Midway Islands"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="MK"/><column name="name" value="Macedonia"/><column name="nationality" value="Macedonian"/></insert>
+    <insert tableName="country"><column name="code" value="ML"/><column name="name" value="Mali"/><column name="nationality" value="Malian"/></insert>
+    <insert tableName="country"><column name="code" value="MM"/><column name="name" value="Myanmar [Burma]"/><column name="nationality" value="Myanmar"/></insert>
+    <insert tableName="country"><column name="code" value="MN"/><column name="name" value="Mongolia"/><column name="nationality" value="Mongolian"/></insert>
+    <insert tableName="country"><column name="code" value="MO"/><column name="name" value="Macau SAR China"/><column name="nationality" value="Chinese"/></insert>
+    <insert tableName="country"><column name="code" value="MP"/><column name="name" value="Northern Mariana Islands"/><column name="nationality" value="American"/></insert>
+    <insert tableName="country"><column name="code" value="MQ"/><column name="name" value="Martinique"/><column name="nationality" value="French"/></insert>
+    <insert tableName="country"><column name="code" value="MR"/><column name="name" value="Mauritania"/><column name="nationality" value="Mauritanian"/></insert>
+    <insert tableName="country"><column name="code" value="MS"/><column name="name" value="Montserrat"/><column name="nationality" value="Montserratian"/></insert>
+    <insert tableName="country"><column name="code" value="MT"/><column name="name" value="Malta"/><column name="nationality" value="Maltese"/></insert>
+    <insert tableName="country"><column name="code" value="MU"/><column name="name" value="Mauritius"/><column name="nationality" value="Mauritian"/></insert>
+    <insert tableName="country"><column name="code" value="MV"/><column name="name" value="Maldives"/><column name="nationality" value="Maldivan"/></insert>
+    <insert tableName="country"><column name="code" value="MW"/><column name="name" value="Malawi"/><column name="nationality" value="Malawian"/></insert>
+    <insert tableName="country"><column name="code" value="MX"/><column name="name" value="Mexico"/><column name="nationality" value="Mexican"/></insert>
+    <insert tableName="country"><column name="code" value="MY"/><column name="name" value="Malaysia"/><column name="nationality" value="Malaysian"/></insert>
+    <insert tableName="country"><column name="code" value="MZ"/><column name="name" value="Mozambique"/><column name="nationality" value="Mozambican"/></insert>
+    <insert tableName="country"><column name="code" value="NA"/><column name="name" value="Namibia"/><column name="nationality" value="Namibian"/></insert>
+    <insert tableName="country"><column name="code" value="NC"/><column name="name" value="New Caledonia"/><column name="nationality" value="New Caledonian"/></insert>
+    <insert tableName="country"><column name="code" value="NE"/><column name="name" value="Niger"/><column name="nationality" value="Nigerian"/></insert>
+    <insert tableName="country"><column name="code" value="NF"/><column name="name" value="Norfolk Island"/><column name="nationality" value="Norfolk Islander"/></insert>
+    <insert tableName="country"><column name="code" value="NG"/><column name="name" value="Nigeria"/><column name="nationality" value="Nigerian"/></insert>
+    <insert tableName="country"><column name="code" value="NI"/><column name="name" value="Nicaragua"/><column name="nationality" value="Nicaraguan"/></insert>
+    <insert tableName="country"><column name="code" value="NL"/><column name="name" value="Netherlands"/><column name="nationality" value="Dutch"/></insert>
+    <insert tableName="country"><column name="code" value="NO"/><column name="name" value="Norway"/><column name="nationality" value="Norwegian"/></insert>
+    <insert tableName="country"><column name="code" value="NP"/><column name="name" value="Nepal"/><column name="nationality" value="Nepalese"/></insert>
+    <insert tableName="country"><column name="code" value="NQ"/><column name="name" value="Dronning Maud Land"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="NR"/><column name="name" value="Nauru"/><column name="nationality" value="Nauruan"/></insert>
+    <insert tableName="country"><column name="code" value="NT"/><column name="name" value="Neutral Zone"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="NU"/><column name="name" value="Niue"/><column name="nationality" value="Niuean"/></insert>
+    <insert tableName="country"><column name="code" value="NZ"/><column name="name" value="New Zealand"/><column name="nationality" value="New Zealander"/></insert>
+    <insert tableName="country"><column name="code" value="OM"/><column name="name" value="Oman"/><column name="nationality" value="Omani"/></insert>
+    <insert tableName="country"><column name="code" value="PA"/><column name="name" value="Panama"/><column name="nationality" value="Panamanian"/></insert>
+    <insert tableName="country"><column name="code" value="PC"/><column name="name" value="Pacific Islands Trust Territory"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="PE"/><column name="name" value="Peru"/><column name="nationality" value="Peruvian"/></insert>
+    <insert tableName="country"><column name="code" value="PF"/><column name="name" value="French Polynesia"/><column name="nationality" value="French Polynesian"/></insert>
+    <insert tableName="country"><column name="code" value="PG"/><column name="name" value="Papua New Guinea"/><column name="nationality" value="Papua New Guinean"/></insert>
+    <insert tableName="country"><column name="code" value="PH"/><column name="name" value="Philippines"/><column name="nationality" value="Filipino"/></insert>
+    <insert tableName="country"><column name="code" value="PK"/><column name="name" value="Pakistan"/><column name="nationality" value="Pakistani"/></insert>
+    <insert tableName="country"><column name="code" value="PL"/><column name="name" value="Poland"/><column name="nationality" value="Polish"/></insert>
+    <insert tableName="country"><column name="code" value="PM"/><column name="name" value="Saint Pierre and Miquelon"/><column name="nationality" value="French"/></insert>
+    <insert tableName="country"><column name="code" value="PN"/><column name="name" value="Pitcairn Islands"/><column name="nationality" value="Pitcairn Islander"/></insert>
+    <insert tableName="country"><column name="code" value="PR"/><column name="name" value="Puerto Rico"/><column name="nationality" value="Puerto Rican"/></insert>
+    <insert tableName="country"><column name="code" value="PS"/><column name="name" value="Palestinian Territories"/><column name="nationality" value="Palestinian"/></insert>
+    <insert tableName="country"><column name="code" value="PT"/><column name="name" value="Portugal"/><column name="nationality" value="Portuguese"/></insert>
+    <insert tableName="country"><column name="code" value="PU"/><column name="name" value="U.S. Miscellaneous Pacific Islands"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="PW"/><column name="name" value="Palau"/><column name="nationality" value="Palauan"/></insert>
+    <insert tableName="country"><column name="code" value="PY"/><column name="name" value="Paraguay"/><column name="nationality" value="Paraguayan"/></insert>
+    <insert tableName="country"><column name="code" value="PZ"/><column name="name" value="Panama Canal Zone"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="QA"/><column name="name" value="Qatar"/><column name="nationality" value="Qatari"/></insert>
+    <insert tableName="country"><column name="code" value="RE"/><column name="name" value="Réunion"/><column name="nationality" value="French"/></insert>
+    <insert tableName="country"><column name="code" value="RO"/><column name="name" value="Romania"/><column name="nationality" value="Romanian"/></insert>
+    <insert tableName="country"><column name="code" value="RS"/><column name="name" value="Serbia"/><column name="nationality" value="Serbian"/></insert>
+    <insert tableName="country"><column name="code" value="RU"/><column name="name" value="Russia"/><column name="nationality" value="Russian"/></insert>
+    <insert tableName="country"><column name="code" value="RW"/><column name="name" value="Rwanda"/><column name="nationality" value="Rwandan"/></insert>
+    <insert tableName="country"><column name="code" value="SA"/><column name="name" value="Saudi Arabia"/><column name="nationality" value="Saudi Arabian"/></insert>
+    <insert tableName="country"><column name="code" value="SB"/><column name="name" value="Solomon Islands"/><column name="nationality" value="Solomon Islander"/></insert>
+    <insert tableName="country"><column name="code" value="SC"/><column name="name" value="Seychelles"/><column name="nationality" value="Seychellois"/></insert>
+    <insert tableName="country"><column name="code" value="SD"/><column name="name" value="Sudan"/><column name="nationality" value="Sudanese"/></insert>
+    <insert tableName="country"><column name="code" value="SE"/><column name="name" value="Sweden"/><column name="nationality" value="Swedish"/></insert>
+    <insert tableName="country"><column name="code" value="SG"/><column name="name" value="Singapore"/><column name="nationality" value="Singaporean"/></insert>
+    <insert tableName="country"><column name="code" value="SH"/><column name="name" value="Saint Helena"/><column name="nationality" value="Saint Helenian"/></insert>
+    <insert tableName="country"><column name="code" value="SI"/><column name="name" value="Slovenia"/><column name="nationality" value="Slovene"/></insert>
+    <insert tableName="country"><column name="code" value="SJ"/><column name="name" value="Svalbard and Jan Mayen"/><column name="nationality" value="Norwegian"/></insert>
+    <insert tableName="country"><column name="code" value="SK"/><column name="name" value="Slovakia"/><column name="nationality" value="Slovak"/></insert>
+    <insert tableName="country"><column name="code" value="SL"/><column name="name" value="Sierra Leone"/><column name="nationality" value="Sierra Leonean"/></insert>
+    <insert tableName="country"><column name="code" value="SM"/><column name="name" value="San Marino"/><column name="nationality" value="Sammarinese"/></insert>
+    <insert tableName="country"><column name="code" value="SN"/><column name="name" value="Senegal"/><column name="nationality" value="Senegalese"/></insert>
+    <insert tableName="country"><column name="code" value="SO"/><column name="name" value="Somalia"/><column name="nationality" value="Somali"/></insert>
+    <insert tableName="country"><column name="code" value="SR"/><column name="name" value="Suriname"/><column name="nationality" value="Surinamer"/></insert>
+    <insert tableName="country"><column name="code" value="ST"/><column name="name" value="São Tomé and Príncipe"/><column name="nationality" value="Sao Tomean"/></insert>
+    <insert tableName="country"><column name="code" value="SU"/><column name="name" value="Union of Soviet Socialist Republics"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="SV"/><column name="name" value="El Salvador"/><column name="nationality" value="Salvadoran"/></insert>
+    <insert tableName="country"><column name="code" value="SY"/><column name="name" value="Syria"/><column name="nationality" value="Syrian"/></insert>
+    <insert tableName="country"><column name="code" value="SZ"/><column name="name" value="Swaziland"/><column name="nationality" value="Swazi"/></insert>
+    <insert tableName="country"><column name="code" value="TC"/><column name="name" value="Turks and Caicos Islands"/><column name="nationality" value="Turks and Caicos Islander"/></insert>
+    <insert tableName="country"><column name="code" value="TD"/><column name="name" value="Chad"/><column name="nationality" value="Chadian"/></insert>
+    <insert tableName="country"><column name="code" value="TF"/><column name="name" value="French Southern Territories"/><column name="nationality" value="French"/></insert>
+    <insert tableName="country"><column name="code" value="TG"/><column name="name" value="Togo"/><column name="nationality" value="Togolese"/></insert>
+    <insert tableName="country"><column name="code" value="TH"/><column name="name" value="Thailand"/><column name="nationality" value="Thai"/></insert>
+    <insert tableName="country"><column name="code" value="TJ"/><column name="name" value="Tajikistan"/><column name="nationality" value="Tadzhik"/></insert>
+    <insert tableName="country"><column name="code" value="TK"/><column name="name" value="Tokelau"/><column name="nationality" value="Tokelauan"/></insert>
+    <insert tableName="country"><column name="code" value="TL"/><column name="name" value="Timor-Leste"/><column name="nationality" value="East Timorese"/></insert>
+    <insert tableName="country"><column name="code" value="TM"/><column name="name" value="Turkmenistan"/><column name="nationality" value="Turkmen"/></insert>
+    <insert tableName="country"><column name="code" value="TN"/><column name="name" value="Tunisia"/><column name="nationality" value="Tunisian"/></insert>
+    <insert tableName="country"><column name="code" value="TO"/><column name="name" value="Tonga"/><column name="nationality" value="Tongan"/></insert>
+    <insert tableName="country"><column name="code" value="TR"/><column name="name" value="Turkey"/><column name="nationality" value="Turkish"/></insert>
+    <insert tableName="country"><column name="code" value="TT"/><column name="name" value="Trinidad and Tobago"/><column name="nationality" value="Trinidadian"/></insert>
+    <insert tableName="country"><column name="code" value="TV"/><column name="name" value="Tuvalu"/><column name="nationality" value="Tuvaluan"/></insert>
+    <insert tableName="country"><column name="code" value="TW"/><column name="name" value="Taiwan"/><column name="nationality" value="Taiwanese"/></insert>
+    <insert tableName="country"><column name="code" value="TZ"/><column name="name" value="Tanzania"/><column name="nationality" value="Tanzanian"/></insert>
+    <insert tableName="country"><column name="code" value="UA"/><column name="name" value="Ukraine"/><column name="nationality" value="Ukrainian"/></insert>
+    <insert tableName="country"><column name="code" value="UG"/><column name="name" value="Uganda"/><column name="nationality" value="Ugandan"/></insert>
+    <insert tableName="country"><column name="code" value="UM"/><column name="name" value="U.S. Minor Outlying Islands"/><column name="nationality" value="American"/></insert>
+    <insert tableName="country"><column name="code" value="US"/><column name="name" value="United States"/><column name="nationality" value="American"/></insert>
+    <insert tableName="country"><column name="code" value="UY"/><column name="name" value="Uruguay"/><column name="nationality" value="Uruguayan"/></insert>
+    <insert tableName="country"><column name="code" value="UZ"/><column name="name" value="Uzbekistan"/><column name="nationality" value="Uzbekistani"/></insert>
+    <insert tableName="country"><column name="code" value="VA"/><column name="name" value="Vatican City"/><column name="nationality" value="Italian"/></insert>
+    <insert tableName="country"><column name="code" value="VC"/><column name="name" value="Saint Vincent and the Grenadines"/><column name="nationality" value="Saint Vincentian"/></insert>
+    <insert tableName="country"><column name="code" value="VD"/><column name="name" value="North Vietnam"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="VE"/><column name="name" value="Venezuela"/><column name="nationality" value="Venezuelan"/></insert>
+    <insert tableName="country"><column name="code" value="VG"/><column name="name" value="British Virgin Islands"/><column name="nationality" value="Virgin Islander"/></insert>
+    <insert tableName="country"><column name="code" value="VI"/><column name="name" value="U.S. Virgin Islands"/><column name="nationality" value="Virgin Islander"/></insert>
+    <insert tableName="country"><column name="code" value="VN"/><column name="name" value="Vietnam"/><column name="nationality" value="Vietnamese"/></insert>
+    <insert tableName="country"><column name="code" value="VU"/><column name="name" value="Vanuatu"/><column name="nationality" value="Ni-Vanuatu"/></insert>
+    <insert tableName="country"><column name="code" value="WF"/><column name="name" value="Wallis and Futuna"/><column name="nationality" value="Wallis and Futuna Islander"/></insert>
+    <insert tableName="country"><column name="code" value="WK"/><column name="name" value="Wake Island"/><column name="nationality" value="???"/></insert>
+    <insert tableName="country"><column name="code" value="WS"/><column name="name" value="Samoa"/><column name="nationality" value="Samoan"/></insert>
+    <insert tableName="country"><column name="code" value="YE"/><column name="name" value="Yemen"/><column name="nationality" value="Yemeni"/></insert>
+    <insert tableName="country"><column name="code" value="YT"/><column name="name" value="Mayotte"/><column name="nationality" value="French"/></insert>
+    <insert tableName="country"><column name="code" value="ZA"/><column name="name" value="South Africa"/><column name="nationality" value="South African"/></insert>
+    <insert tableName="country"><column name="code" value="ZM"/><column name="name" value="Zambia"/><column name="nationality" value="Zambian"/></insert>
+    <insert tableName="country"><column name="code" value="ZW"/><column name="name" value="Zimbabwe"/><column name="nationality" value="Zimbabwean"/></insert>
+
+  </changeSet>
+
+</databaseChangeLog>
