@@ -34,13 +34,16 @@
   <!-- user table (usr) -->
   <changeSet id="user-ddl" author="kees">
     <createTable tableName="user">
-      <column name="id" type="int">
+      <column name="id" type="int" autoIncrement="true">
         <constraints primaryKey="true" primaryKeyName="user-pk"/>
       </column>
-      <column name="version" type="int">
+      <column name="version" type="int" defaultValue="0">
         <constraints nullable="false"/>
       </column>
       <column name="active" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="userName" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
       <column name="name" type="varchar(50)">
@@ -55,7 +58,7 @@
       <column name="createdById" type="int">
         <constraints nullable="false"/>
       </column>
-      <column name="lastModifiedAt" type="timestamp with timezone">
+      <column name="lastModifiedAt" type="timestamp with timezone" defaultValueDate="now()">
         <constraints nullable="false"/>
       </column>
       <column name="lastModifiedById" type="int">
@@ -76,15 +79,31 @@
       referencedTableName="user"
       constraintName="usr-usr-modifiedBy-fk"
     />
+    <addUniqueConstraint
+        tableName="user"
+        columnNames="userName"
+        constraintName="usr-userName-u"
+    />
+  </changeSet>
+
+  <changeSet id="user-dml" author="kees">
+    <insert tableName="user">
+      <column name="id" value="1" autoIncrement="true"/>
+      <column name="userName" value="kees.schotanus" />
+      <column name="name" value="Kees Schotanus" />
+      <column name="email" value="kees.schotanus@somewhere.nl" />
+      <column name="createdById" value="1" />
+      <column name="lastModifiedById" value="1"/>
+    </insert>
   </changeSet>
 
   <!-- Nobel prize category table (npc) -->
   <changeSet id="nobel-prize-category-ddl" author="kees">
     <createTable tableName="nobel-prize-category">
-      <column name="id" type="int">
+      <column name="id" type="int" autoIncrement="true">
         <constraints primaryKey="true"  primaryKeyName="nobel-prize-category-pk"/>
       </column>
-      <column name="code" type="char(3)">
+      <column name="code" type="varchar(3)">
       </column>
       <column name="description" type="VARCHAR(50)">
         <constraints nullable="false"/>
@@ -99,32 +118,26 @@
 
   <changeSet id="nobel-prize-category-dml" author="kees">
     <insert tableName="nobel-prize-category">
-      <column name="id" value="1" />
       <column name="code" value="P" />
       <column name="description" value="Physics" />
     </insert>
     <insert tableName="nobel-prize-category">
-      <column name="id" value="2" />
       <column name="code" value="C" />
       <column name="description" value="Chemistry" />
     </insert>
     <insert tableName="nobel-prize-category">
-      <column name="id" value="3" />
       <column name="code" value="M" />
       <column name="description" value="Physiology or medicine" />
     </insert>
     <insert tableName="nobel-prize-category">
-      <column name="id" value="4" />
       <column name="code" value="L" />
       <column name="description" value="Literature" />
     </insert>
     <insert tableName="nobel-prize-category">
-      <column name="id" value="5" />
       <column name="code" value="PC" />
       <column name="description" value="Peace" />
     </insert>
     <insert tableName="nobel-prize-category">
-      <column name="id" value="6" />
       <column name="code" value="E" />
       <column name="description" value="Economy" />
     </insert>
@@ -133,10 +146,10 @@
   <!-- Nobel prize table (np) -->
   <changeSet id="nobel-prize-ddl" author="kees">
     <createTable tableName="nobel-prize">
-      <column  name="id"  type="int">
+      <column name="id"  type="int" autoIncrement="true">
         <constraints primaryKey="true"  primaryKeyName="nobel-prize-pk"/>
       </column>
-      <column name="version" type="int">
+      <column name="version" type="int" defaultValue="0">
         <constraints nullable="false"/>
       </column>
       <column name="categoryId" type="int">
@@ -152,7 +165,7 @@
       <column name="createdById" type="int">
         <constraints nullable="false"/>
       </column>
-      <column name="lastModifiedAt" type="timestamp with timezone">
+      <column name="lastModifiedAt" type="timestamp with timezone" defaultValueDate="now()">
         <constraints nullable="false"/>
       </column>
       <column name="lastModifiedById" type="int">
@@ -196,10 +209,13 @@
   <!-- person table (prs) -->
   <changeSet id="person-ddl" author="kees">
     <createTable tableName="person">
-      <column  name="id"  type="int">
+      <column  name="id"  type="int" autoIncrement="true">
         <constraints primaryKey="true" primaryKeyName="person-pk"/>
       </column>
-      <column name="version" type="int">
+      <column name="version" type="int" defaultValue="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="personIdentifier" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
       <column name="name" type="varchar(50)">
@@ -223,7 +239,7 @@
       <column name="createdById" type="int">
         <constraints nullable="false"/>
       </column>
-      <column name="lastModifiedAt" type="timestamp with timezone">
+      <column name="lastModifiedAt" type="timestamp with timezone" defaultValueDate="now()">
         <constraints nullable="false"/>
       </column>
       <column name="lastModifiedById" type="int">
@@ -251,6 +267,11 @@
         referencedTableName="user"
         constraintName="prs-usr-modifiedBy-fk"
     />
+    <addUniqueConstraint
+        tableName="person"
+        columnNames="personIdentifier"
+        constraintName="prs-personIdentifier-u"
+    />
     <createIndex
         indexName="prs-ctr-idx"
         tableName="person">
@@ -264,10 +285,13 @@
   -->
   <changeSet id="organization-ddl" author="kees">
     <createTable tableName="organization">
-      <column  name="id"  type="int">
+      <column  name="id"  type="int" autoIncrement="true">
         <constraints primaryKey="true" primaryKeyName="organization-pk"/>
       </column>
-      <column name="version" type="int">
+      <column name="version" type="int" defaultValue="0">
+        <constraints nullable="false"/>
+      </column>
+      <column name="organizationIdentifier" type="varchar(50)">
         <constraints nullable="false"/>
       </column>
       <column name="name" type="varchar(50)">
@@ -281,7 +305,7 @@
       <column name="createdById" type="int">
         <constraints nullable="false"/>
       </column>
-      <column name="lastModifiedAt" type="timestamp with timezone">
+      <column name="lastModifiedAt" type="timestamp with timezone" defaultValueDate="now()">
         <constraints nullable="false"/>
       </column>
       <column name="lastModifiedById" type="int">
@@ -302,15 +326,20 @@
         referencedTableName="user"
         constraintName="org-usr-modifiedBy-fk"
     />
+    <addUniqueConstraint
+        tableName="organization"
+        columnNames="organizationIdentifier"
+        constraintName="org-organizationIdentifier-u"
+    />
   </changeSet>
 
   <!-- Nobel prize laureate table (npl) -->
   <changeSet id="nobel-prize-laureate-ddl" author="kees">
     <createTable tableName="nobel-prize-laureate">
-      <column name="id" type="int">
+      <column name="id" type="int" autoIncrement="true">
         <constraints primaryKey="true" primaryKeyName="nobel-prize-laureate-pk"/>
       </column>
-      <column name="version" type="int">
+      <column name="version" type="int" defaultValue="0">
         <constraints nullable="false"/>
       </column>
       <column name="nobelPrizeId" type="int">
@@ -335,7 +364,7 @@
       <column name="createdById" type="int">
         <constraints nullable="false"/>
       </column>
-      <column name="lastModifiedAt" type="timestamp with timezone">
+      <column name="lastModifiedAt" type="timestamp with timezone" defaultValueDate="now()">
         <constraints nullable="false"/>
       </column>
       <column name="lastModifiedById" type="int">

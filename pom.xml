@@ -72,6 +72,10 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -210,7 +214,7 @@
                                 <interfaceOnly>true</interfaceOnly>
                                 <returnResponse>true</returnResponse>
                                 <dateLibrary>java8</dateLibrary>
-                                <useBeanValidation>false</useBeanValidation>
+                                <useBeanValidation>true</useBeanValidation>
                                 <useSwaggerAnnotations>false</useSwaggerAnnotations>
                                 <sourceFolder>openapi</sourceFolder>
                             </configOptions>

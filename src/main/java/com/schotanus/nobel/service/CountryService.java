@@ -1,0 +1,37 @@
+package com.schotanus.nobel.service;
+
+import com.schotanus.nobel.repository.CountryRepository;
+import jakarta.annotation.Nonnull;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.NotFoundException;
+
+
+/**
+ * This CountryService is only responsible for selecting a single country.
+ * To add or update a country, update Liquibase's changeLog.xml file.
+ */
+@ApplicationScoped
+public class CountryService extends AbstractService {
+
+    private final CountryRepository repository;
+
+    CountryService(CountryRepository repository) {
+        this.repository = repository;
+    }
+
+    /**
+     * Gets the primary of the country with the supplied code.
+     * @param code The code (ISO-3166, alpha-2 code) of the country.
+     * @return The primary key of the country with the supplied code.
+     * @throws NotFoundException When no country with the supplied code exists.
+     */
+    public Integer getPrimaryKeyOfCountry(@Nonnull String code) {
+        Integer id = repository.getPrimaryKeyOfCountry(code);
+
+        if (id == null) {
+            throw new NotFoundException("Country not found with code:" + code);
+        }
+
+        return id;
+    }
+}

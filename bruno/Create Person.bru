@@ -1,0 +1,28 @@
+meta {
+  name: Create Person
+  type: http
+  seq: 8
+}
+
+post {
+  url: http://localhost:8080/persons
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "personIdentifier": "Albert2",
+    "name": "Albert Einstein",
+    "displayName": "Einstein, Albert",
+    "description": "Topper ",
+    "birthDate": "1879-03-14",
+    "birthCountryCode": "NL",
+    "deathDate": "1955-04-18",
+    "url": "https://en.wikipedia.org/wiki/Albert_Einstein"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

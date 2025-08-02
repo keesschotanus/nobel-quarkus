@@ -1,0 +1,22 @@
+meta {
+  name: Get Persons
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:8080/persons?name=Alb&countryCode=DE&yearOfBirth=1879&yearOfDeath=1955
+  body: none
+  auth: inherit
+}
+
+params:query {
+  name: Alb
+  countryCode: DE
+  yearOfBirth: 1879
+  yearOfDeath: 1955
+}
+
+settings {
+  encodeUrl: true
+}

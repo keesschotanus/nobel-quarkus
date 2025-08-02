@@ -68,9 +68,61 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/NobelPrize'
+    post:
+      summary: Creates a single Nobel Prize
+      operationId: createNobelPrize
+      requestBody:
+        description: Nobel Prize plus all Laureates
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NobelPrize'
+      responses:
+        "201":
+          description: Created
   /persons:
+    post:
+      summary: Creates a person that presumably is a Nobel Prize laureate
+      operationId: createPerson
+      requestBody:
+        description: Person data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Person'
+      responses:
+        "201":
+          description: Created
     get:
-      summary: Get all persons
+      summary: Get all persons corresponding to the following selection criteria
+      operationId: getPersons
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Part of the name of the person
+        - name: countryCode
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Code of country where the person was born
+        - name: yearOfBirth
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Year of birth
+        - name: yearOfDeath
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Year of death
       responses:
         '200':
           description: List of persons
@@ -80,6 +132,24 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Person'
+  /persons/{id}:
+    get:
+      summary: Get a single person by its person identifier
+      operationId: getPerson
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Person identifier
+      responses:
+        '200':
+          description: Single person
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
   /organizations:
     get:
       summary: Get all organizations
@@ -123,6 +193,7 @@ components:
       properties:
         code:
           type: string
+          enum: [ 'P', 'C', 'M', 'L', 'E', 'PC' ]
         description:
           type: string
     NobelPrize:
@@ -132,6 +203,7 @@ components:
           type: string
         year:
           type: integer
+          minimum: 1900
         url:
           type: string
         laureates:
@@ -141,41 +213,60 @@ components:
         createdAt:
           type: string
           format: date-time
+          readOnly: true
         createdById:
           type: integer
+          readOnly: true
         lastModifiedAt:
           type: string
           format: date-time
+          readOnly: true
         lastModifiedById:
           type: integer
+          readOnly: true
     NobelPrizeLaureate:
       type: object
       properties:
-        person:
-          $ref: "#/components/schemas/Person"
-        organization:
-          $ref: "#/components/schemas/Organization"
+        personIdentifier:
+          type: string
+        organizationIdentifier:
+          type: string
         description:
           type: string
         fractionNominator:
           type: integer
+          minimum: 1
+          maximum: 2
         fractionDenominator:
           type: integer
+          minimum: 1
+          maximum: 3
         createdAt:
           type: string
           format: date-time
+          readOnly: true
         createdById:
           type: integer
+          readOnly: true
         lastModifiedAt:
           type: string
           format: date-time
+          readOnly: true
         lastModifiedById:
           type: integer
+          readOnly: true
     Person:
       type: object
       properties:
+        personIdentifier:
+          type: string
+          description: Uniquely identifies a single person
+          minLength: 1
+          maxLength: 50
         name:
           type: string
+          minLength: 1
+          maxLength: 50
         displayName:
           type: string
         description:
@@ -183,8 +274,10 @@ components:
         birthDate:
           type: string
           format: date
-        birthCountryId:
-          type: integer
+        birthCountryCode:
+          type: string
+          minLength: 2
+          maxLength: 2
         deathDate:
           type: string
           format: date
@@ -193,16 +286,28 @@ components:
         createdAt:
           type: string
           format: date-time
+          readOnly: true
         createdById:
           type: integer
+          readOnly: true
         lastModifiedAt:
           type: string
           format: date-time
+          readOnly: true
         lastModifiedById:
           type: integer
+          readOnly: true
+      required:
+        - personIdentifier
+        - name
+        - birthDate
+        - birthCountryCode
     Organization:
       type: object
       properties:
+        organizationIdentifier:
+          type: string
+          description: Uniquely identifies a single organization
         name:
           type: string
         description:
@@ -212,18 +317,24 @@ components:
         createdAt:
           type: string
           format: date-time
+          readOnly: true
         createdById:
           type: integer
+          readOnly: true
         lastModifiedAt:
           type: string
           format: date-time
+          readOnly: true
         lastModifiedById:
           type: integer
+          readOnly: true
     Country:
       type: object
       properties:
         code:
           type: string
+          minLength: 2
+          maxLength: 2
         name:
           type: string
         nationality:
@@ -240,10 +351,14 @@ components:
         createdAt:
           type: string
           format: date-time
+          readOnly: true
         createdById:
           type: integer
+          readOnly: true
         lastModifiedAt:
           type: string
           format: date-time
+          readOnly: true
         lastModifiedById:
           type: integer
+          readOnly: true
