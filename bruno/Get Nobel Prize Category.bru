@@ -1,17 +1,17 @@
 meta {
-  name: Get Person
+  name: Get Nobel Prize Category
   type: http
-  seq: 3
+  seq: 5
 }
 
 get {
-  url: http://localhost:8080/persons/:id
+  url: http://localhost:8080/nobelprizecategories/:code
   body: none
   auth: inherit
 }
 
 params:path {
-  id: Albert
+  code: P
 }
 
 settings {

@@ -40,8 +40,7 @@ public class PersonRepository {
             PERSON.CREATEDAT,
             PERSON.LASTMODIFIEDAT);
 
-    PersonRepository(DSLContext dsl, CountryService countryService)
-    {
+    PersonRepository(DSLContext dsl, CountryService countryService) {
         this.dsl = dsl;
         this.countryService = countryService;
     }
@@ -51,7 +50,7 @@ public class PersonRepository {
      * @param person Model to create the person from.
      * @return The primary key of the created person.
      */
-    public Integer createPerson(@Nonnull final Person person) {
+    public @Nonnull Integer createPerson(@Nonnull final Person person) {
         Integer countryId = countryService.getPrimaryKeyOfCountry(person.getBirthCountryCode());
 
         return dsl.insertInto(PERSON).columns(
@@ -77,20 +76,20 @@ public class PersonRepository {
                         1,
                         1)
                 .returningResult(PERSON.ID)
-                .fetchOneInto(Integer.class);
+                .fetchSingleInto(Integer.class);
     }
 
     /**
-     * Gets a person by the unique person identifier.
+     * Gets a person by its unique person identifier.
      * @param personIdentifier Person identifier.
-     * @return The Person with the supplied id.
+     * @return The Person with the supplied identifier, or null when not found.
      */
-    public Person getPerson(@Nonnull String personIdentifier) {
+    public @Nullable Person getPerson(@Nonnull String personIdentifier) {
         return dsl.select(personFields)
                 .from(PERSON)
                 .join(COUNTRY).on(COUNTRY.ID.eq(PERSON.BIRTHCOUNTRYID))
                 .where(PERSON.PERSONIDENTIFIER.eq(personIdentifier))
-                .fetchSingleInto(Person.class);
+                .fetchOneInto(Person.class);
     }
 
     /**
@@ -100,7 +99,7 @@ public class PersonRepository {
      * @param yearOfDeath Year the person died or NULL for living persons.
      * @return All Persons matching the supplied selection criteria.
      */
-    public List<Person> getPersons(
+    public @Nonnull List<Person> getPersons(
             @Nullable String name,
             @Nullable String countryCode,
             @Nullable Integer yearOfBirth,

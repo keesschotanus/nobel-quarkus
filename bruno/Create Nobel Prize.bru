@@ -1,0 +1,36 @@
+meta {
+  name: Create Nobel Prize
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8080/nobelprizes
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "category": "P",
+    "year": 3002,
+    "url": "",
+    "laureates": [
+      {
+        "personIdentifier": "KEES",
+        "description": "2006",
+        "fractionNominator": 1,
+        "fractionDenominator": 1
+      }
+    ]
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+}

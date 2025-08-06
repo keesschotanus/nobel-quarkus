@@ -6,6 +6,7 @@ import io.quarkus.logging.Log;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -31,16 +32,22 @@ public class PersonService extends AbstractService {
     public String createPerson(@Nonnull final Person person) {
         Integer id = repository.createPerson(person);
         Log.info("Person created with id:" + id);
-        return getBaseUrl() + person.getPersonIdentifier();
+        return getBaseUrl() + "persons/" + person.getPersonIdentifier();
     }
 
     /**
      * Gets a person by the unique person identifier.
      * @param personIdentifier Person identifier.
      * @return The Person with the supplied id.
+     * @throws NotFoundException when no Person with the supplied identifier exists.
      */
     public Person getPerson(@Nonnull String personIdentifier) {
-        return repository.getPerson(personIdentifier);
+        Person person = repository.getPerson(personIdentifier);
+        if (person == null) {
+            throw new NotFoundException("Person wih identifier: " + personIdentifier + ", not found");
+        }
+
+        return person;
     }
 
     /**

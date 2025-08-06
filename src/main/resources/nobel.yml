@@ -188,19 +188,21 @@ paths:
                   $ref: '#/components/schemas/User'
 components:
   schemas:
+    NobelPrizeCategoryEnum:
+      type: string
+      enum: [ 'P', 'C', 'M', 'L', 'E', 'PC' ]
     NobelPrizeCategory:
       type: object
       properties:
         code:
-          type: string
-          enum: [ 'P', 'C', 'M', 'L', 'E', 'PC' ]
+          $ref: '#/components/schemas/NobelPrizeCategoryEnum'
         description:
           type: string
     NobelPrize:
       type: object
       properties:
         category:
-          type: string
+          $ref: '#/components/schemas/NobelPrizeCategoryEnum'
         year:
           type: integer
           minimum: 1900

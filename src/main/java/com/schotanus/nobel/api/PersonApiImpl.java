@@ -8,6 +8,9 @@ import jakarta.ws.rs.core.Response;
 import java.net.URI;
 
 
+/**
+ * Implements the generated {@link PersonsApi}
+ */
 public class PersonApiImpl implements PersonsApi {
 
     private final PersonService service;
