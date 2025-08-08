@@ -106,7 +106,7 @@ public class PersonRepository {
             @Nullable Integer yearOfDeath) {
         Condition condition = trueCondition();
         if (name != null && !name.isBlank()) {
-            condition = condition.and(upper(PERSON.NAME).like(name.toUpperCase() + "%"));
+            condition = condition.and(upper(PERSON.DISPLAYNAME).like(name.toUpperCase() + "%"));
         }
         if (countryCode != null && !countryCode.isBlank()) {
             condition = condition.and(upper(COUNTRY.CODE).eq(countryCode.toUpperCase()));

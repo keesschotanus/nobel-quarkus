@@ -1,7 +1,9 @@
 package com.schotanus.nobel.repository;
 
 import com.schotanus.nobel.model.NobelPrize;
+import com.schotanus.nobel.model.NobelPrizeCreate;
 import com.schotanus.nobel.model.NobelPrizeLaureate;
+import com.schotanus.nobel.model.NobelPrizeLaureateCreate;
 import com.schotanus.nobel.model.Person;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -87,7 +89,7 @@ public class NobelPrizeRepository {
      * @param nobelPrize Nobel Prize model.
      * @return Primary key of the created Nobel Prize.
      */
-    public @Nonnull Integer createNobelPrize(NobelPrize nobelPrize) {
+    public @Nonnull Integer createNobelPrize(NobelPrizeCreate nobelPrize) {
         Integer nobelPrizeId = dsl.insertInto(NOBEL_PRIZE)
             .columns(
                 NOBEL_PRIZE.CATEGORYID,
@@ -99,8 +101,8 @@ public class NobelPrizeRepository {
             .returningResult(NOBEL_PRIZE.ID)
             .fetchSingleInto(Integer.class);
 
-        List<NobelPrizeLaureate> nobelPrizeLaureates = nobelPrize.getLaureates();
-        for (NobelPrizeLaureate nobelPrizeLaureate : nobelPrizeLaureates ) {
+        List<NobelPrizeLaureateCreate> nobelPrizeLaureates = nobelPrize.getLaureates();
+        for (NobelPrizeLaureateCreate nobelPrizeLaureate : nobelPrizeLaureates ) {
             Integer personId = null;
             if (nobelPrizeLaureate.getPersonIdentifier() != null && !nobelPrizeLaureate.getPersonIdentifier().isBlank()) {
                 personId = dsl.select(PERSON.ID)

@@ -1,6 +1,6 @@
 package com.schotanus.nobel.api;
 
-import com.schotanus.nobel.model.NobelPrize;
+import com.schotanus.nobel.model.NobelPrizeCreate;
 import com.schotanus.nobel.service.NobelPrizeService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -18,7 +18,7 @@ public class NobelPrizeApiImpl implements NobelprizesApi {
     }
 
     @Override
-    public Response createNobelPrize(@Nonnull NobelPrize nobelPrize) {
+    public Response createNobelPrize(@Nonnull NobelPrizeCreate nobelPrize) {
         service.createNobelPrize(nobelPrize);
         return  Response.created(null).build();
     }

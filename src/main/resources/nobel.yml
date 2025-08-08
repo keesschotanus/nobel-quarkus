@@ -77,7 +77,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NobelPrize'
+              $ref: '#/components/schemas/NobelPrizeCreate'
       responses:
         "201":
           description: Created
@@ -104,7 +104,7 @@ paths:
           required: false
           schema:
             type: string
-          description: Part of the name of the person
+          description: Part of the (display) name of the person.
         - name: countryCode
           in: query
           required: false
@@ -198,6 +198,20 @@ components:
           $ref: '#/components/schemas/NobelPrizeCategoryEnum'
         description:
           type: string
+    NobelPrizeCreate:
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/NobelPrizeCategoryEnum'
+        year:
+          type: integer
+          minimum: 1900
+        url:
+          type: string
+        laureates:
+          type: array
+          items:
+            $ref: '#/components/schemas/NobelPrizeLaureateCreate'
     NobelPrize:
       type: object
       properties:
@@ -226,13 +240,30 @@ components:
         lastModifiedById:
           type: integer
           readOnly: true
-    NobelPrizeLaureate:
+    NobelPrizeLaureateCreate:
       type: object
       properties:
         personIdentifier:
           type: string
         organizationIdentifier:
           type: string
+        description:
+          type: string
+        fractionNominator:
+          type: integer
+          minimum: 1
+          maximum: 2
+        fractionDenominator:
+          type: integer
+          minimum: 1
+          maximum: 3
+    NobelPrizeLaureate:
+      type: object
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+        organization:
+          $ref: '#/components/schemas/Organization'
         description:
           type: string
         fractionNominator:

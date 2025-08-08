@@ -5,9 +5,14 @@ meta {
 }
 
 get {
-  url: http://localhost:8080/nobelprizes
+  url: http://localhost:8080/nobelprizes?year=1902&category=P
   body: none
   auth: inherit
+}
+
+params:query {
+  year: 1902
+  category: P
 }
 
 settings {

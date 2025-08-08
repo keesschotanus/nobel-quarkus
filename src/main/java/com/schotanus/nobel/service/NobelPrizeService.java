@@ -1,6 +1,7 @@
 package com.schotanus.nobel.service;
 
 import com.schotanus.nobel.model.NobelPrize;
+import com.schotanus.nobel.model.NobelPrizeCreate;
 import com.schotanus.nobel.repository.NobelPrizeRepository;
 import com.schotanus.nobel.validation.NobelPrizeValidator;
 import io.quarkus.logging.Log;
@@ -29,7 +30,7 @@ public class NobelPrizeService extends AbstractService {
      * @param nobelPrize Model to create the Nobel Prize from.
      * @return URL to access the created Nobel Prize.
      */
-    public String createNobelPrize(@Nonnull @NobelPrizeValidator final NobelPrize nobelPrize) {
+    public String createNobelPrize(@Nonnull @NobelPrizeValidator final NobelPrizeCreate nobelPrize) {
         Integer id = nobelPrizeRepository.createNobelPrize(nobelPrize);
         Log.info("Nobel Prize created with id:" + id);
         return getBaseUrl() + "nobelprizes/" + nobelPrize.getYear()  + "/" + nobelPrize.getCategory();

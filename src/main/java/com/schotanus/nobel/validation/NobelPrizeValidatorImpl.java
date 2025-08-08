@@ -1,7 +1,7 @@
 package com.schotanus.nobel.validation;
 
-import com.schotanus.nobel.model.NobelPrize;
-import com.schotanus.nobel.model.NobelPrizeLaureate;
+import com.schotanus.nobel.model.NobelPrizeCreate;
+import com.schotanus.nobel.model.NobelPrizeLaureateCreate;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -20,7 +20,7 @@ import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintVa
  * These criteria are not checked here yet.
  */
 @ApplicationScoped
-public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeValidator, NobelPrize>
+public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeValidator, NobelPrizeCreate>
 {
 
     /**
@@ -31,11 +31,11 @@ public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeVa
      * @return True when valid, otherwise false.
      */
     @Override
-    public boolean isValid(final NobelPrize nobelPrize, final ConstraintValidatorContext context)
+    public boolean isValid(final NobelPrizeCreate nobelPrize, final ConstraintValidatorContext context)
     {
         int nominatorTotal = 0;
 
-        for (NobelPrizeLaureate nobelPrizeLaureate : nobelPrize.getLaureates()) {
+        for (NobelPrizeLaureateCreate nobelPrizeLaureate : nobelPrize.getLaureates()) {
             int nominator = nobelPrizeLaureate.getFractionNominator();
             int denominator = nobelPrizeLaureate.getFractionDenominator();
 
