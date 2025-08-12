@@ -1,0 +1,4 @@
+"id","version","personIdentifier","name","displayName","description","birthDate","birthCountryId","deathDate","url","createdAt","createdById","lastModifiedAt","lastModifiedById"
+1,0,Röntgen,Wilhelm Conrad Röntgen,"Röntgen, Wilhelm Conrad ",,1845-03-27,60,1923-02-10,https://www.nobelprize.org/prizes/physics/1901/rontgen/facts/,2025-08-08 17:21:07,1,2025-08-08 17:21:07,1
+2,0,Lorentz,Hendrik Antoon Lorentz,"Lorentz, Hendrik Antoon",,1853-07-18,173,1928-02-04,https://www.nobelprize.org/prizes/physics/1902/lorentz/facts/,2025-08-08 17:24:04,1,2025-08-08 17:24:04,1
+3,0,Zeeman,Pieter Zeeman,"Zeeman, Pieter",,1865-05-25,173,1943-10-09,https://www.nobelprize.org/prizes/physics/1902/zeeman/facts/,2025-08-08 17:26:13,1,2025-08-08 17:26:13,1

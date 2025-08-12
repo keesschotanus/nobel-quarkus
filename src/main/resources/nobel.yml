@@ -252,11 +252,11 @@ components:
         fractionNominator:
           type: integer
           minimum: 1
-          maximum: 2
+          maximum: 100
         fractionDenominator:
           type: integer
           minimum: 1
-          maximum: 3
+          maximum: 100
     NobelPrizeLaureate:
       type: object
       properties:
@@ -269,11 +269,11 @@ components:
         fractionNominator:
           type: integer
           minimum: 1
-          maximum: 2
+          maximum: 100
         fractionDenominator:
           type: integer
           minimum: 1
-          maximum: 3
+          maximum: 100
         createdAt:
           type: string
           format: date-time

@@ -29,16 +29,16 @@ public class PersonRepository {
     private final CountryService countryService;
 
     private final List<Field<?>> personFields = List.of(
-            PERSON.PERSONIDENTIFIER,
-            PERSON.NAME,
-            PERSON.DISPLAYNAME,
-            PERSON.DESCRIPTION,
-            PERSON.URL,
-            COUNTRY.CODE.as("birthCountryCode"),
-            PERSON.BIRTHDATE,
-            PERSON.DEATHDATE,
-            PERSON.CREATEDAT,
-            PERSON.LASTMODIFIEDAT);
+        PERSON.PERSONIDENTIFIER,
+        PERSON.NAME,
+        PERSON.DISPLAYNAME,
+        PERSON.DESCRIPTION,
+        PERSON.URL,
+        COUNTRY.CODE.as("birthCountryCode"),
+        PERSON.BIRTHDATE,
+        PERSON.DEATHDATE,
+        PERSON.CREATEDAT,
+        PERSON.LASTMODIFIEDAT);
 
     PersonRepository(DSLContext dsl, CountryService countryService) {
         this.dsl = dsl;
@@ -54,29 +54,29 @@ public class PersonRepository {
         Integer countryId = countryService.getPrimaryKeyOfCountry(person.getBirthCountryCode());
 
         return dsl.insertInto(PERSON).columns(
-                        PERSON.PERSONIDENTIFIER,
-                        PERSON.NAME,
-                        PERSON.DISPLAYNAME,
-                        PERSON.DESCRIPTION,
-                        PERSON.BIRTHDATE,
-                        PERSON.BIRTHCOUNTRYID,
-                        PERSON.DEATHDATE,
-                        PERSON.URL,
-                        PERSON.CREATEDBYID,
-                        PERSON.LASTMODIFIEDBYID)
-                .values(
-                        person.getPersonIdentifier(),
-                        person.getName(),
-                        person.getDisplayName(),
-                        person.getDescription(),
-                        person.getBirthDate(),
-                        countryId,
-                        person.getDeathDate(),
-                        person.getUrl(),
-                        1,
-                        1)
-                .returningResult(PERSON.ID)
-                .fetchSingleInto(Integer.class);
+            PERSON.PERSONIDENTIFIER,
+            PERSON.NAME,
+            PERSON.DISPLAYNAME,
+            PERSON.DESCRIPTION,
+            PERSON.BIRTHDATE,
+            PERSON.BIRTHCOUNTRYID,
+            PERSON.DEATHDATE,
+            PERSON.URL,
+            PERSON.CREATEDBYID,
+            PERSON.LASTMODIFIEDBYID)
+        .values(
+            person.getPersonIdentifier(),
+            person.getName(),
+            person.getDisplayName(),
+            person.getDescription(),
+            person.getBirthDate(),
+            countryId,
+            person.getDeathDate(),
+            person.getUrl(),
+            1,
+            1)
+        .returningResult(PERSON.ID)
+        .fetch().getFirst().value1();
     }
 
     /**
@@ -86,10 +86,10 @@ public class PersonRepository {
      */
     public @Nullable Person getPerson(@Nonnull String personIdentifier) {
         return dsl.select(personFields)
-                .from(PERSON)
-                .join(COUNTRY).on(COUNTRY.ID.eq(PERSON.BIRTHCOUNTRYID))
-                .where(PERSON.PERSONIDENTIFIER.eq(personIdentifier))
-                .fetchOneInto(Person.class);
+            .from(PERSON)
+            .join(COUNTRY).on(COUNTRY.ID.eq(PERSON.BIRTHCOUNTRYID))
+            .where(PERSON.PERSONIDENTIFIER.eq(personIdentifier))
+            .fetchOneInto(Person.class);
     }
 
     /**

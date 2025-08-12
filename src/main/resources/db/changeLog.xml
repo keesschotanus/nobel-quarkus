@@ -206,6 +206,10 @@
     </createIndex>
   </changeSet>
 
+  <changeSet id="nobel-prize-dml" author="kees" labels="data">
+    <loadData file="nobel-prize.csv" tableName="nobel-prize" relativeToChangelogFile="true"/>
+  </changeSet>
+
   <!-- person table (prs) -->
   <changeSet id="person-ddl" author="kees">
     <createTable tableName="person">
@@ -277,6 +281,10 @@
         tableName="person">
       <column name="birthCountryId"/>
     </createIndex>
+  </changeSet>
+
+  <changeSet id="person-dml" author="kees" labels="data">
+    <loadData file="person.csv" tableName="person" relativeToChangelogFile="true"/>
   </changeSet>
 
   <!--
@@ -425,6 +433,10 @@
         tableName="nobel-prize-laureate">
       <column name="personId"/>
     </createIndex>
+  </changeSet>
+
+  <changeSet id="nobel-prize-laureate-dml" author="kees" labels="data">
+    <loadData file="nobel-prize-laureate.csv" tableName="nobel-prize-laureate" relativeToChangelogFile="true"/>
   </changeSet>
 
 </databaseChangeLog>

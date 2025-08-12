@@ -99,7 +99,7 @@ public class NobelPrizeRepository {
                 NOBEL_PRIZE.LASTMODIFIEDBYID)
             .values(1, nobelPrize.getYear(), nobelPrize.getUrl(), 1, 1)
             .returningResult(NOBEL_PRIZE.ID)
-            .fetchSingleInto(Integer.class);
+            .fetch().getFirst().value1();
 
         List<NobelPrizeLaureateCreate> nobelPrizeLaureates = nobelPrize.getLaureates();
         for (NobelPrizeLaureateCreate nobelPrizeLaureate : nobelPrizeLaureates ) {
@@ -108,7 +108,7 @@ public class NobelPrizeRepository {
                 personId = dsl.select(PERSON.ID)
                     .from(PERSON)
                     .where(PERSON.PERSONIDENTIFIER.eq(nobelPrizeLaureate.getPersonIdentifier()))
-                    .fetchOneInto(Integer.class);
+                    .execute();
                 // Todo error handling
             }
 
@@ -118,7 +118,7 @@ public class NobelPrizeRepository {
                 organizationId = dsl.select(ORGANIZATION.ID)
                         .from(ORGANIZATION)
                         .where(ORGANIZATION.ORGANIZATIONIDENTIFIER.eq(nobelPrizeLaureate.getOrganizationIdentifier()))
-                        .fetchOneInto(Integer.class);
+                        .execute();
                 // Todo error handling
             }
             // Todo check not both id's can be non null
