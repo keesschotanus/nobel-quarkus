@@ -104,20 +104,19 @@ public class NobelPrizeRepository {
         List<NobelPrizeLaureateCreate> nobelPrizeLaureates = nobelPrize.getLaureates();
         for (NobelPrizeLaureateCreate nobelPrizeLaureate : nobelPrizeLaureates ) {
             Integer personId = null;
-            if (nobelPrizeLaureate.getPersonIdentifier() != null && !nobelPrizeLaureate.getPersonIdentifier().isBlank()) {
+            if (nobelPrizeLaureate.getType().getPersonIdentifier() != null) {
                 personId = dsl.select(PERSON.ID)
                     .from(PERSON)
-                    .where(PERSON.PERSONIDENTIFIER.eq(nobelPrizeLaureate.getPersonIdentifier()))
+                    .where(PERSON.PERSONIDENTIFIER.eq(nobelPrizeLaureate.getType().getPersonIdentifier()))
                     .execute();
                 // Todo error handling
             }
 
             Integer organizationId = null;
-            if (nobelPrizeLaureate.getOrganizationIdentifier() != null
-                    && !nobelPrizeLaureate.getOrganizationIdentifier().isBlank()) {
+            if (nobelPrizeLaureate.getType().getOrganizationIdentifier() != null) {
                 organizationId = dsl.select(ORGANIZATION.ID)
                         .from(ORGANIZATION)
-                        .where(ORGANIZATION.ORGANIZATIONIDENTIFIER.eq(nobelPrizeLaureate.getOrganizationIdentifier()))
+                        .where(ORGANIZATION.ORGANIZATIONIDENTIFIER.eq(nobelPrizeLaureate.getType().getOrganizationIdentifier()))
                         .execute();
                 // Todo error handling
             }

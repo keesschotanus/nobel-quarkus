@@ -240,13 +240,25 @@ components:
         lastModifiedById:
           type: integer
           readOnly: true
+    PersonIdentifier:
+      type: object
+      properties:
+         personIdentifier:
+           type: string
+           description: A unique identifier for a person.
+    OrganizationIdentifier:
+      type: object
+      properties:
+        organizationIdentifier:
+          type: string
+          description: A unique identifier for an organization.
     NobelPrizeLaureateCreate:
       type: object
       properties:
-        personIdentifier:
-          type: string
-        organizationIdentifier:
-          type: string
+        type:
+          oneOf:
+            - $ref: '#/components/schemas/PersonIdentifier'
+            - $ref: '#/components/schemas/OrganizationIdentifier'
         description:
           type: string
         fractionNominator:
@@ -331,7 +343,7 @@ components:
           type: integer
           readOnly: true
       required:
-        - personIdentifier
+        - identifier
         - name
         - birthDate
         - birthCountryCode
