@@ -15,6 +15,7 @@ public abstract class AbstractService {
 
     /**
      * Gets the base url of the application from an application properties file.
+     *
      * @return The base url of the application from an application properties file.
      */
     public String getBaseUrl() {

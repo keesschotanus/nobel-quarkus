@@ -26,6 +26,7 @@ public class PersonService extends AbstractService {
 
     /**
      * Creates a person in the database.
+     *
      * @param person Model to create the person from.
      * @return URL to access the created person.
      */
@@ -38,6 +39,7 @@ public class PersonService extends AbstractService {
 
     /**
      * Gets a person by its unique person identifier.
+     *
      * @param personIdentifier Person identifier.
      * @return The Person with the supplied identifier.
      * @throws NotFoundException when no person with the supplied identifier exists.
@@ -54,6 +56,7 @@ public class PersonService extends AbstractService {
 
     /**
      * Gets the primary key of a person by its unique person identifier.
+     *
      * @param personIdentifier Person identifier.
      * @return The primary key of the person.
      * @throws NotFoundException when no person with the supplied identifier exists.
@@ -71,7 +74,7 @@ public class PersonService extends AbstractService {
     /**
      * Gets all persons matching the supplied selection criteria.
      *
-     * @param name        Name (or first part of the name) of the person.
+     * @param name Name (or first part of the name) of the person.
      * @param countryCode Country where the person was born.
      * @param yearOfBirth Year the person was born.
      * @param yearOfDeath Year the person died or NULL for living persons.

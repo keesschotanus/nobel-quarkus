@@ -1,5 +1,10 @@
 package com.schotanus.nobel.repository;
 
+import static com.schotanus.nobel.Tables.COUNTRY;
+import static com.schotanus.nobel.tables.Person.PERSON;
+import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.upper;
+
 import com.schotanus.nobel.model.Person;
 import com.schotanus.nobel.service.CountryService;
 import jakarta.annotation.Nonnull;
@@ -12,11 +17,6 @@ import org.jooq.Field;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
-
-import static com.schotanus.nobel.Tables.COUNTRY;
-import static com.schotanus.nobel.tables.Person.PERSON;
-import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.DSL.upper;
 
 
 /**
@@ -50,7 +50,8 @@ public class PersonRepository {
      * @param person Model to create the person from.
      * @return The primary key of the created person.
      */
-    public @Nonnull Integer createPerson(@Nonnull final Person person) {
+    @Nonnull
+    public Integer createPerson(@Nonnull final Person person) {
         Integer countryId = countryService.getPrimaryKeyOfCountry(person.getBirthCountryCode());
 
         return dsl.insertInto(PERSON).columns(
@@ -84,7 +85,8 @@ public class PersonRepository {
      * @param personIdentifier Person identifier.
      * @return The person with the supplied identifier, or null when not found.
      */
-    public @Nullable Person getPerson(@Nonnull String personIdentifier) {
+    @Nullable
+    public Person getPerson(@Nonnull String personIdentifier) {
         return dsl.select(personFields)
             .from(PERSON)
             .join(COUNTRY).on(COUNTRY.ID.eq(PERSON.BIRTHCOUNTRYID))
@@ -97,7 +99,8 @@ public class PersonRepository {
      * @param personIdentifier Person identifier.
      * @return The primary key of the person, or null when not found.
      */
-    public @Nullable Integer getPrimaryKey(@Nonnull String personIdentifier) {
+    @Nullable
+    public Integer getPrimaryKey(@Nonnull String personIdentifier) {
         return dsl.select(PERSON.ID)
             .from(PERSON)
             .where(PERSON.PERSONIDENTIFIER.eq(personIdentifier))
@@ -105,13 +108,16 @@ public class PersonRepository {
     }
 
     /**
-     * @param name        Name (or first part of the name) of the person.
+     * Gets all persons matching the supplied selection criteria.
+     *
+     * @param name Name (or first part of the name) of the person.
      * @param countryCode Country where the person was born.
      * @param yearOfBirth Year the person was born.
      * @param yearOfDeath Year the person died or NULL for living persons.
      * @return All Persons matching the supplied selection criteria.
      */
-    public @Nonnull List<Person> getPersons(
+    @Nonnull
+    public List<Person> getPersons(
             @Nullable String name,
             @Nullable String countryCode,
             @Nullable Integer yearOfBirth,

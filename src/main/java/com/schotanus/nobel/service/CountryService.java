@@ -21,11 +21,13 @@ public class CountryService extends AbstractService {
 
     /**
      * Gets the primary key of the country with the supplied code.
+     *
      * @param code The code (ISO-3166, alpha-2 code) of the country.
      * @return The primary key of the country with the supplied code.
      * @throws NotFoundException When no country with the supplied code exists.
      */
-    public @Nonnull Integer getPrimaryKeyOfCountry(@Nonnull final String code) {
+    @Nonnull
+    public Integer getPrimaryKeyOfCountry(@Nonnull final String code) {
         Integer id = repository.getPrimaryKeyOfCountry(code);
 
         if (id == null) {

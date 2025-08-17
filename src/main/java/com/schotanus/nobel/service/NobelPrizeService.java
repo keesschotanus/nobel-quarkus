@@ -29,6 +29,7 @@ public class NobelPrizeService extends AbstractService {
      * @param nobelPrize Model to create the Nobel Prize from.
      * @return URL to access the created Nobel Prize.
      */
+    @Nonnull
     public String createNobelPrize(@Nonnull @NobelPrizeValidator final NobelPrizeCreate nobelPrize) {
         Integer id = repository.createNobelPrize(nobelPrize);
         Log.info("Nobel Prize created with id:" + id);
@@ -38,11 +39,12 @@ public class NobelPrizeService extends AbstractService {
     /**
      * Gets all Nobel Prizes matching the supplied selection criteria
      *
-     * @param year         Year the Nobel Prize was awarded.
+     * @param year Year the Nobel Prize was awarded.
      * @param categoryCode Category in which the Nobel Prize was awarded.
      * @return All Nobel Prizes matching the supplied selection criteria.
      */
-    public @Nonnull List<NobelPrize> getNobelPrizes(@Nullable Integer year, @Nullable String categoryCode) {
+    @Nonnull
+    public List<NobelPrize> getNobelPrizes(@Nullable Integer year, @Nullable String categoryCode) {
         return repository.getNobelPrizes(year, categoryCode);
     }
 }

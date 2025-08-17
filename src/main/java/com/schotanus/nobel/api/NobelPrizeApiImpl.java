@@ -6,6 +6,9 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.ws.rs.core.Response;
 
+import java.net.URI;
+
+
 /**
  * Implements the generated {@link NobelprizesApi}.
  */
@@ -19,8 +22,7 @@ public class NobelPrizeApiImpl implements NobelprizesApi {
 
     @Override
     public Response createNobelPrize(@Nonnull NobelPrizeCreate nobelPrize) {
-        service.createNobelPrize(nobelPrize);
-        return  Response.created(null).build();
+        return Response.created(URI.create(service.createNobelPrize(nobelPrize))).build();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.schotanus.nobel.api;
 
 import com.schotanus.nobel.service.NobelPrizeCategoryService;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.core.Response;
 
 /**
@@ -16,7 +15,6 @@ public class NobelPrizeCategoryApiImpl implements NobelprizecategoriesApi {
     }
 
     @Override
-    @GET
     public Response getNobelPrizeCategories() {
         return Response.ok(service.getNobelPrizeCategories()).build();
     }

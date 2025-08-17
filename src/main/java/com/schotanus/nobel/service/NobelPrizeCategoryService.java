@@ -23,10 +23,12 @@ public class NobelPrizeCategoryService {
 
     /**
      * Gets a Nobel Prize category by its unique code.
+     *
      * @param code The code of the Nobel Prize category.
      * @return The Nobel Prize category by code.
      * @throws NotFoundException When no such Nobel Prize category exists.
      */
+    @Nonnull
     public NobelPrizeCategory getNobelPrizeCategory(@Nonnull final String code) {
         NobelPrizeCategory category = repository.getNobelPrizeCategory(code);
         if (category == null) {
@@ -37,10 +39,11 @@ public class NobelPrizeCategoryService {
     }
 
     /**
-     * Gets all Nobel Prize categories}.
+     * Gets all Nobel Prize categories.
      * @return A complete list of Nobel Prize categories.
      */
-    public @Nonnull List<NobelPrizeCategory> getNobelPrizeCategories() {
+    @Nonnull
+    public List<NobelPrizeCategory> getNobelPrizeCategories() {
         return repository.getNobelPrizeCategories();
     }
 

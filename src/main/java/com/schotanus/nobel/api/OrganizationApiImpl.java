@@ -22,9 +22,7 @@ public class OrganizationApiImpl implements OrganizationsApi {
 
     @Override
     public Response createOrganization(@Nonnull final Organization organization) {
-        String url = service.createOrganization(organization);
-
-        return Response.created(URI.create(url)).build();
+        return Response.created(URI.create(service.createOrganization(organization))).build();
     }
 
     @Override

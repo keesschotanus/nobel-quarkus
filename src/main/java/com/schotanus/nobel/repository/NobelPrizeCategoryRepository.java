@@ -2,6 +2,7 @@ package com.schotanus.nobel.repository;
 
 import com.schotanus.nobel.model.NobelPrizeCategory;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.jooq.DSLContext;
 
@@ -24,10 +25,12 @@ public class NobelPrizeCategoryRepository {
 
     /**
      * Gets a single Nobel Prize category by its unique code.
+     *
      * @param code The Nobel Prize category code.
      * @return The Nobel Prize category with the supplied code,
      *  or null when no Nobel Prize category exists with the supplied code.
      */
+    @Nullable
     public NobelPrizeCategory getNobelPrizeCategory(@Nonnull String code) {
         return dsl.select(NOBEL_PRIZE_CATEGORY.fields())
             .from(NOBEL_PRIZE_CATEGORY)
@@ -39,8 +42,9 @@ public class NobelPrizeCategoryRepository {
      * Gets all Nobel Prize categories.
      * @return All Nobel Prize categories.
      */
-    public @Nonnull List<NobelPrizeCategory> getNobelPrizeCategories() {
-        return dsl.select(NOBEL_PRIZE_CATEGORY.CODE)
+    @Nonnull
+    public List<NobelPrizeCategory> getNobelPrizeCategories() {
+        return dsl.select(NOBEL_PRIZE_CATEGORY.CODE, NOBEL_PRIZE_CATEGORY.DESCRIPTION)
             .from(NOBEL_PRIZE_CATEGORY)
             .orderBy(NOBEL_PRIZE_CATEGORY.DESCRIPTION)
             .fetchInto(NobelPrizeCategory.class);

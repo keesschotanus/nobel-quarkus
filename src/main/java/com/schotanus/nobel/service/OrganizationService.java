@@ -25,9 +25,11 @@ public class OrganizationService extends AbstractService {
 
     /**
      * Creates an organization in the database.
+     *
      * @param organization model to create the organization from.
      * @return URL to access the created organization.
      */
+    @Nonnull
     public String createOrganization(@Nonnull final Organization organization) {
         Integer id = repository.createOrganization(organization);
         Log.info("Organization created with id:" + id);
@@ -36,6 +38,7 @@ public class OrganizationService extends AbstractService {
 
     /**
      * Gets an organization by its unique organization identifier.
+     *
      * @param organizationIdentifier Organization identifier.
      * @return The organization with the supplied identifier.
      * @throws NotFoundException when no organization with the supplied identifier exists.
@@ -53,7 +56,7 @@ public class OrganizationService extends AbstractService {
     /**
      * Gets all organizations matching the supplied selection criteria.
      *
-     * @param name        Name (or first part of the name) of the organization.
+     * @param name Name (or first part of the name) of the organization.
      * @return All organizations matching the supplied selection criteria.
      */
     @Nonnull
@@ -63,6 +66,7 @@ public class OrganizationService extends AbstractService {
 
     /**
      * Gets the primary key of an organization by its unique organization identifier.
+     *
      * @param organizationIdentifier Organization identifier.
      * @return The primary key of the organization.
      * @throws NotFoundException When no organization with the supplied identifier exists.

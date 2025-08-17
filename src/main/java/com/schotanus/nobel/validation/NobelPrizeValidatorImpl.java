@@ -33,6 +33,7 @@ public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeVa
 
     /**
      * Determines if the supplied Nobel Prize is valid (see documentation above).
+     *
      * @param nobelPrize The Nobel Prize to validate.
      * @param context Context in which the constraint is evaluated.
      *
@@ -42,12 +43,13 @@ public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeVa
     public boolean isValid(final NobelPrizeCreate nobelPrize, final ConstraintValidatorContext context)
     {
         return validateFractions(nobelPrize, context)
-                && validateLaureatesAreUniquePersons(nobelPrize, context)
-                && validateNumberOfLaureates(nobelPrize, context);
+            && validateLaureatesAreUniquePersons(nobelPrize, context)
+            && validateNumberOfLaureates(nobelPrize, context);
     }
 
     /**
      * Validate that the sum of the Nobel Prize fractions is 1.
+     *
      * @param nobelPrize The Nobel Prize to validate.
      * @param context Context in which the constraint is evaluated.
      * @return True when valid, otherwise false.
@@ -77,6 +79,7 @@ public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeVa
     /**
      * Validate that all laureates are persons and each person is unique.
      * The check is not performed for Nobel Peace Prizes since they can be awarded to organizations.
+     *
      * @param nobelPrize The Nobel Prize to validate.
      * @param context Context in which the constraint is evaluated.
      * @return True when valid, otherwise false.
@@ -112,6 +115,7 @@ public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeVa
 
     /**
      * Validate that the number of laureates is 1,2 or 3.
+     *
      * @param nobelPrize The Nobel Prize to validate.
      * @param context Context in which the constraint is evaluated.
      * @return True when valid, otherwise false.

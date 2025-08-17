@@ -21,9 +21,7 @@ public class PersonApiImpl implements PersonsApi {
 
     @Override
     public Response createPerson(@Nonnull final Person person) {
-        String url = service.createPerson(person);
-
-        return Response.created(URI.create(url)).build();
+        return Response.created(URI.create(service.createPerson(person))).build();
     }
 
     @Override

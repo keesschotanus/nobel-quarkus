@@ -45,12 +45,14 @@ public class NobelPrizeRepository {
 
     /**
      * Creates a Nobel Prize, including the Nobel Prize laureates.
+     *
      * @param nobelPrize Nobel Prize model.
      * @return Primary key of the created Nobel Prize.
      * @throws EntityExistsException When the Nobel Prize already existed.
      */
     @Transactional(Transactional.TxType.REQUIRED)
-    public @Nonnull Integer createNobelPrize(final @Nonnull NobelPrizeCreate nobelPrize) {
+    @Nonnull
+    public Integer createNobelPrize(final @Nonnull NobelPrizeCreate nobelPrize) {
         // Insert the Nobel Prize
         Integer nobelPrizeId;
         try {
@@ -76,11 +78,13 @@ public class NobelPrizeRepository {
 
     /**
      * Gets all Nobel Prizes, optionally filtered by year and category.
+     *
      * @param year Year the Nobel Prize was awarded.
      * @param category Category in which the Nobel Prize was awarded.
      * @return All Nobel Prizes matching the supplied selection criteria.
      */
-    public @Nonnull List<NobelPrize> getNobelPrizes(@Nullable final Integer year, @Nullable final String category) {
+    @Nonnull
+    public List<NobelPrize> getNobelPrizes(@Nullable final Integer year, @Nullable final String category) {
         Condition condition = trueCondition();
         if (year != null) {
             condition = condition.and(NOBEL_PRIZE.YEAR.eq(year));

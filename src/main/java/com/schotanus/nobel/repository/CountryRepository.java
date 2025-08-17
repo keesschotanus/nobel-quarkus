@@ -1,6 +1,7 @@
 package com.schotanus.nobel.repository;
 
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.jooq.DSLContext;
 
@@ -22,9 +23,11 @@ public class CountryRepository {
 
     /**
      * Gets the primary of the country with the supplied code.
+     *
      * @param code The code (ISO-3166, alpha-2 code) of the country.
      * @return The primary key of the country with the supplied code, or null when no such country exists.
      */
+    @Nullable
     public Integer getPrimaryKeyOfCountry(@Nonnull String code) {
         return dsl.select(COUNTRY.ID)
             .from(COUNTRY)
