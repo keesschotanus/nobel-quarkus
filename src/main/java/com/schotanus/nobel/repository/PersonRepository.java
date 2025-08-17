@@ -20,7 +20,7 @@ import static org.jooq.impl.DSL.upper;
 
 
 /**
- * This PersonRepository is responsible for maintaining and selecting Persons.
+ * This repository is responsible for maintaining and selecting persons.
  */
 @ApplicationScoped
 public class PersonRepository {
@@ -82,7 +82,7 @@ public class PersonRepository {
     /**
      * Gets a person by its unique person identifier.
      * @param personIdentifier Person identifier.
-     * @return The Person with the supplied identifier, or null when not found.
+     * @return The person with the supplied identifier, or null when not found.
      */
     public @Nullable Person getPerson(@Nonnull String personIdentifier) {
         return dsl.select(personFields)
@@ -90,6 +90,18 @@ public class PersonRepository {
             .join(COUNTRY).on(COUNTRY.ID.eq(PERSON.BIRTHCOUNTRYID))
             .where(PERSON.PERSONIDENTIFIER.eq(personIdentifier))
             .fetchOneInto(Person.class);
+    }
+
+    /**
+     * Gets the primary key of a person by its unique person identifier.
+     * @param personIdentifier Person identifier.
+     * @return The primary key of the person, or null when not found.
+     */
+    public @Nullable Integer getPrimaryKey(@Nonnull String personIdentifier) {
+        return dsl.select(PERSON.ID)
+            .from(PERSON)
+            .where(PERSON.PERSONIDENTIFIER.eq(personIdentifier))
+            .fetchOneInto(Integer.class);
     }
 
     /**

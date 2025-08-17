@@ -10,8 +10,7 @@ import static com.schotanus.nobel.Tables.NOBEL_PRIZE_CATEGORY;
 
 
 /**
- * This NobelPrizeCategoryRepository is only responsible for selecting
- * Nobel Prize categories.
+ * This repository is only responsible for selecting Nobel Prize categories.
  * To add or update a category, update Liquibase's changeLog.xml file.
  */
 @ApplicationScoped

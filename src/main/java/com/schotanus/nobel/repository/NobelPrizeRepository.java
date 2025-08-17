@@ -5,11 +5,16 @@ import com.schotanus.nobel.model.NobelPrizeCreate;
 import com.schotanus.nobel.model.NobelPrizeLaureate;
 import com.schotanus.nobel.model.NobelPrizeLaureateCreate;
 import com.schotanus.nobel.model.Person;
+import com.schotanus.nobel.service.OrganizationService;
+import com.schotanus.nobel.service.PersonService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityExistsException;
+import jakarta.transaction.Transactional;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
+import org.jooq.exception.IntegrityConstraintViolationException;
 import org.jooq.impl.DSL;
 
 import java.util.List;
@@ -22,16 +27,51 @@ import static com.schotanus.nobel.tables.Person.PERSON;
 import static org.jooq.impl.DSL.trueCondition;
 
 /**
- * This NobelPrizeRepository is responsible for maintaining and selecting Nobel Prizes.
- * These normally include any laureates.
+ * This repository is responsible for maintaining and selecting Nobel Prizes.
+ * These include any laureates.
  */
 @ApplicationScoped
 public class NobelPrizeRepository {
 
     private final DSLContext dsl;
+    private final PersonService personService;
+    private final OrganizationService organizationService;
 
-    NobelPrizeRepository(DSLContext dsl) {
+    NobelPrizeRepository(DSLContext dsl, PersonService personService, OrganizationService organizationService) {
         this.dsl = dsl;
+        this.personService = personService;
+        this.organizationService = organizationService;
+    }
+
+    /**
+     * Creates a Nobel Prize, including the Nobel Prize laureates.
+     * @param nobelPrize Nobel Prize model.
+     * @return Primary key of the created Nobel Prize.
+     * @throws EntityExistsException When the Nobel Prize already existed.
+     */
+    @Transactional(Transactional.TxType.REQUIRED)
+    public @Nonnull Integer createNobelPrize(final @Nonnull NobelPrizeCreate nobelPrize) {
+        // Insert the Nobel Prize
+        Integer nobelPrizeId;
+        try {
+            nobelPrizeId = dsl.insertInto(NOBEL_PRIZE)
+                .columns(
+                    NOBEL_PRIZE.CATEGORYID,
+                    NOBEL_PRIZE.YEAR,
+                    NOBEL_PRIZE.URL,
+                    NOBEL_PRIZE.CREATEDBYID,
+                    NOBEL_PRIZE.LASTMODIFIEDBYID)
+                .values(1, nobelPrize.getYear(), nobelPrize.getUrl(), 1, 1)
+                .returningResult(NOBEL_PRIZE.ID)
+                .fetch().getFirst().value1();
+
+        } catch (IntegrityConstraintViolationException exception) {
+            throw new EntityExistsException("This Nobel Prize already exists");
+        }
+
+        createNobelPrizeLaureates(nobelPrizeId, nobelPrize.getLaureates());
+
+        return nobelPrizeId;
     }
 
     /**
@@ -84,65 +124,57 @@ public class NobelPrizeRepository {
         .fetchInto(NobelPrize.class);
     }
 
-    /**
-     * Creates a Nobel Prize, including the Nobel Prize laureates.
-     * @param nobelPrize Nobel Prize model.
-     * @return Primary key of the created Nobel Prize.
-     */
-    public @Nonnull Integer createNobelPrize(NobelPrizeCreate nobelPrize) {
-        Integer nobelPrizeId = dsl.insertInto(NOBEL_PRIZE)
-            .columns(
-                NOBEL_PRIZE.CATEGORYID,
-                NOBEL_PRIZE.YEAR,
-                NOBEL_PRIZE.URL,
-                NOBEL_PRIZE.CREATEDBYID,
-                NOBEL_PRIZE.LASTMODIFIEDBYID)
-            .values(1, nobelPrize.getYear(), nobelPrize.getUrl(), 1, 1)
-            .returningResult(NOBEL_PRIZE.ID)
-            .fetch().getFirst().value1();
-
-        List<NobelPrizeLaureateCreate> nobelPrizeLaureates = nobelPrize.getLaureates();
-        for (NobelPrizeLaureateCreate nobelPrizeLaureate : nobelPrizeLaureates ) {
-            Integer personId = null;
-            if (nobelPrizeLaureate.getType().getPersonIdentifier() != null) {
-                personId = dsl.select(PERSON.ID)
-                    .from(PERSON)
-                    .where(PERSON.PERSONIDENTIFIER.eq(nobelPrizeLaureate.getType().getPersonIdentifier()))
-                    .execute();
-                // Todo error handling
+    private void createNobelPrizeLaureates(
+            final @Nonnull Integer nobelPrizeId,
+            final List<NobelPrizeLaureateCreate> laureates) {
+        for (NobelPrizeLaureateCreate laureate : laureates) {
+            Integer primaryKeyOfPerson = null;
+            Integer primaryKeyOfOrganization = null;
+            final String personIdentifier = laureate.getType().getPersonIdentifier();
+            if (personIdentifier != null) {
+                primaryKeyOfPerson = personService.getPrimaryKey(personIdentifier);
             }
-
-            Integer organizationId = null;
-            if (nobelPrizeLaureate.getType().getOrganizationIdentifier() != null) {
-                organizationId = dsl.select(ORGANIZATION.ID)
-                        .from(ORGANIZATION)
-                        .where(ORGANIZATION.ORGANIZATIONIDENTIFIER.eq(nobelPrizeLaureate.getType().getOrganizationIdentifier()))
-                        .execute();
-                // Todo error handling
+            final String organizationIdentifier = laureate.getType().getOrganizationIdentifier();
+            if (organizationIdentifier != null) {
+                primaryKeyOfOrganization = organizationService.getPrimaryKey(organizationIdentifier);
             }
-            // Todo check not both id's can be non null
-            dsl.insertInto(NOBEL_PRIZE_LAUREATE)
-                .columns(
-                    NOBEL_PRIZE_LAUREATE.NOBELPRIZEID,
-                    NOBEL_PRIZE_LAUREATE.PERSONID,
-                    NOBEL_PRIZE_LAUREATE.ORGANIZATIONID,
-                    NOBEL_PRIZE_LAUREATE.DESCRIPTION,
-                    NOBEL_PRIZE_LAUREATE.FRACTIONNOMINATOR,
-                    NOBEL_PRIZE_LAUREATE.FRACTIONDENOMINATOR,
-                    NOBEL_PRIZE_LAUREATE.CREATEDBYID,
-                    NOBEL_PRIZE_LAUREATE.LASTMODIFIEDBYID)
-                .values(
-                    nobelPrizeId,
-                    personId,
-                    organizationId,
-                    nobelPrizeLaureate.getDescription(),
-                    nobelPrizeLaureate.getFractionNominator(),
-                    nobelPrizeLaureate.getFractionDenominator(),
-                    1,
-                    1)
-                .execute();
+            createLaureate(laureate, nobelPrizeId, primaryKeyOfPerson, primaryKeyOfOrganization);
         }
-
-        return nobelPrizeId;
     }
+
+    /**
+     * Creates a Nobel Prize laureate.
+     *
+     * @param laureate Nobel Prize laureate model.
+     * @param nobelPrizeId Primary key of the corresponding Nobel Prize.
+     * @param personId Primary key of the corresponding person.
+     * @param organizationId Primary key of the corresponding organization.
+     */
+    private void createLaureate(
+            @Nonnull final NobelPrizeLaureateCreate laureate,
+            @Nonnull final Integer nobelPrizeId,
+            @Nullable final Integer personId,
+            @Nullable final Integer organizationId) {
+        dsl.insertInto(NOBEL_PRIZE_LAUREATE)
+            .columns(
+                NOBEL_PRIZE_LAUREATE.NOBELPRIZEID,
+                NOBEL_PRIZE_LAUREATE.PERSONID,
+                NOBEL_PRIZE_LAUREATE.ORGANIZATIONID,
+                NOBEL_PRIZE_LAUREATE.DESCRIPTION,
+                NOBEL_PRIZE_LAUREATE.FRACTIONNOMINATOR,
+                NOBEL_PRIZE_LAUREATE.FRACTIONDENOMINATOR,
+                NOBEL_PRIZE_LAUREATE.CREATEDBYID,
+                NOBEL_PRIZE_LAUREATE.LASTMODIFIEDBYID)
+            .values(
+                nobelPrizeId,
+                personId,
+                organizationId,
+                laureate.getDescription(),
+                laureate.getFractionNominator(),
+                laureate.getFractionDenominator(),
+                1,
+                1)
+            .execute();
+    }
+
 }

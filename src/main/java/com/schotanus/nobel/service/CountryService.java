@@ -7,7 +7,7 @@ import jakarta.ws.rs.NotFoundException;
 
 
 /**
- * This CountryService is only responsible for selecting a single country.
+ * This service is only responsible for selecting a single country.
  * To add or update a country, update Liquibase's changeLog.xml file.
  */
 @ApplicationScoped

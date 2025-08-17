@@ -13,15 +13,14 @@ import java.util.List;
 
 
 /**
- * This NobelPrizeService is responsible for maintaining Nobel Prizes,
- * including any Nobel Prize laureates.
+ * This service is responsible for maintaining Nobel Prizes, including any Nobel Prize laureates.
  */
 @ApplicationScoped
 public class NobelPrizeService extends AbstractService {
-    private final NobelPrizeRepository nobelPrizeRepository;
+    private final NobelPrizeRepository repository;
 
     NobelPrizeService(NobelPrizeRepository nobelPrizeRepository) {
-        this.nobelPrizeRepository = nobelPrizeRepository;
+        this.repository = nobelPrizeRepository;
     }
 
     /**
@@ -31,19 +30,19 @@ public class NobelPrizeService extends AbstractService {
      * @return URL to access the created Nobel Prize.
      */
     public String createNobelPrize(@Nonnull @NobelPrizeValidator final NobelPrizeCreate nobelPrize) {
-        Integer id = nobelPrizeRepository.createNobelPrize(nobelPrize);
+        Integer id = repository.createNobelPrize(nobelPrize);
         Log.info("Nobel Prize created with id:" + id);
         return getBaseUrl() + "nobelprizes/" + nobelPrize.getYear()  + "/" + nobelPrize.getCategory();
     }
 
     /**
-     * Gets all {@link NobelPrize} objects matching the supplied selection criteria
+     * Gets all Nobel Prizes matching the supplied selection criteria
      *
      * @param year         Year the Nobel Prize was awarded.
      * @param categoryCode Category in which the Nobel Prize was awarded.
-     * @return All NobelPrizes matching the supplied selection criteria.
+     * @return All Nobel Prizes matching the supplied selection criteria.
      */
     public @Nonnull List<NobelPrize> getNobelPrizes(@Nullable Integer year, @Nullable String categoryCode) {
-        return nobelPrizeRepository.getNobelPrizes(year, categoryCode);
+        return repository.getNobelPrizes(year, categoryCode);
     }
 }

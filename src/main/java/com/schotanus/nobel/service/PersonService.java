@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /**
- * This PersonService is responsible for maintaining Persons.
+ * This service is responsible for maintaining and selecting persons.
  * The Persons that are maintained are normally Nobel Prize laureates, like scientists and writers.
  */
 @ApplicationScoped
@@ -29,6 +29,7 @@ public class PersonService extends AbstractService {
      * @param person Model to create the person from.
      * @return URL to access the created person.
      */
+    @Nonnull
     public String createPerson(@Nonnull final Person person) {
         Integer id = repository.createPerson(person);
         Log.info("Person created with id:" + id);
@@ -36,12 +37,13 @@ public class PersonService extends AbstractService {
     }
 
     /**
-     * Gets a person by the unique person identifier.
+     * Gets a person by its unique person identifier.
      * @param personIdentifier Person identifier.
-     * @return The Person with the supplied id.
-     * @throws NotFoundException when no Person with the supplied identifier exists.
+     * @return The Person with the supplied identifier.
+     * @throws NotFoundException when no person with the supplied identifier exists.
      */
-    public Person getPerson(@Nonnull String personIdentifier) {
+    @Nonnull
+    public Person getPerson(@Nonnull final String personIdentifier) {
         Person person = repository.getPerson(personIdentifier);
         if (person == null) {
             throw new NotFoundException("Person wih identifier: " + personIdentifier + ", not found");
@@ -51,14 +53,31 @@ public class PersonService extends AbstractService {
     }
 
     /**
-     * Gets all {@link Person} objects matching the supplied selection criteria.
+     * Gets the primary key of a person by its unique person identifier.
+     * @param personIdentifier Person identifier.
+     * @return The primary key of the person.
+     * @throws NotFoundException when no person with the supplied identifier exists.
+     */
+    @Nonnull
+    public Integer getPrimaryKey(@Nonnull final String personIdentifier) {
+        final Integer primaryKey = repository.getPrimaryKey(personIdentifier);
+        if (primaryKey == null) {
+            throw new NotFoundException("Person wih identifier: " + personIdentifier + ", not found");
+        }
+
+        return primaryKey;
+    }
+
+    /**
+     * Gets all persons matching the supplied selection criteria.
      *
      * @param name        Name (or first part of the name) of the person.
      * @param countryCode Country where the person was born.
      * @param yearOfBirth Year the person was born.
      * @param yearOfDeath Year the person died or NULL for living persons.
-     * @return All Persons matching the supplied selection criteria.
+     * @return All persons matching the supplied selection criteria.
      */
+    @Nonnull
     public List<Person> getPersons(
             @Nullable String name,
             @Nullable String countryCode,

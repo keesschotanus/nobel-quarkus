@@ -9,9 +9,8 @@ import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 
 /**
- * This NobelPrizeCategoryService is responsible for selecting Nobel Prize categories.
- * Since it is not expected that these categories will chang often, updates have to be done
- * on the database.
+ * This service is responsible for selecting Nobel Prize categories.
+ * Since it is not expected that these categories will chang often, updates have to be done on the database.
  */
 @ApplicationScoped
 public class NobelPrizeCategoryService {
@@ -26,7 +25,7 @@ public class NobelPrizeCategoryService {
      * Gets a Nobel Prize category by its unique code.
      * @param code The code of the Nobel Prize category.
      * @return The Nobel Prize category by code.
-     * @throws NotFoundException when no such Nobel Prize category exists.
+     * @throws NotFoundException When no such Nobel Prize category exists.
      */
     public NobelPrizeCategory getNobelPrizeCategory(@Nonnull final String code) {
         NobelPrizeCategory category = repository.getNobelPrizeCategory(code);
@@ -38,7 +37,7 @@ public class NobelPrizeCategoryService {
     }
 
     /**
-     * Gets all Nobel Prize categories.
+     * Gets all Nobel Prize categories}.
      * @return A complete list of Nobel Prize categories.
      */
     public @Nonnull List<NobelPrizeCategory> getNobelPrizeCategories() {

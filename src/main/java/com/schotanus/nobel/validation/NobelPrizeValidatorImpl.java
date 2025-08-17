@@ -20,10 +20,16 @@ import java.util.Set;
  * - the laurates are unique.
  * - all laureates are persons (except for the Nobel Peace Prize)
  * - the number of laureates is either 1, 2 or 3
+ * After the above checks are passed, it is still possible that this valid Nobel Prize can't be stored:
+ * - personIdentifier may not refer to existing person
+ * - organizationIdentifier may not refer to existing organization
+ * - the Nobel Prize may already exist.
+ * Most of these situations will be handled by the repository class.
  */
 @ApplicationScoped
 public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeValidator, NobelPrizeCreate>
 {
+    private static final String MESSAGE = "message";
 
     /**
      * Determines if the supplied Nobel Prize is valid (see documentation above).
@@ -61,7 +67,7 @@ public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeVa
         }
 
         if (nominatorTotal != denominatorTotal) {
-            ((ConstraintValidatorContextImpl)context).addMessageParameter("message", "Sum of fractions does not add up to 1");
+            ((ConstraintValidatorContextImpl)context).addMessageParameter(MESSAGE, "Sum of fractions does not add up to 1");
             result = false;
         }
 
@@ -90,14 +96,14 @@ public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeVa
             String personIdentifier = laureate.getType().getPersonIdentifier();
             if (personIdentifier == null) {
                 ((ConstraintValidatorContextImpl)context).addMessageParameter(
-                        "message", "Organizations can't win this Nobel Prize");
+                        MESSAGE, "Organizations can't win this Nobel Prize");
             }
             uniqueLaureates.add(laureate.getType().getPersonIdentifier());
         }
 
         if (laureates.size() != uniqueLaureates.size()) {
             ((ConstraintValidatorContextImpl)context).addMessageParameter(
-                    "message", "Duplicate laureate found");
+                    MESSAGE, "Duplicate laureate found");
             return false;
         }
 
@@ -125,7 +131,7 @@ public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeVa
 
         if (numberOfLaureates < 1 || numberOfLaureates > 3) {
             ((ConstraintValidatorContextImpl)context).addMessageParameter(
-                    "message", "Number of laureates must be either 1, 2 or 3");
+                    MESSAGE, "Number of laureates must be either 1, 2 or 3");
             return false;
         }
 
