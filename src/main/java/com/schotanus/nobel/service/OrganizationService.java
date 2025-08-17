@@ -4,8 +4,11 @@ import com.schotanus.nobel.model.Organization;
 import com.schotanus.nobel.repository.OrganizationRepository;
 import io.quarkus.logging.Log;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.NotFoundException;
+
+import java.util.List;
 
 
 /**
@@ -48,6 +51,17 @@ public class OrganizationService extends AbstractService {
     }
 
     /**
+     * Gets all organizations matching the supplied selection criteria.
+     *
+     * @param name        Name (or first part of the name) of the organization.
+     * @return All organizations matching the supplied selection criteria.
+     */
+    @Nonnull
+    public List<Organization> getOrganizations(@Nullable String name) {
+        return repository.getOrganizations(name);
+    }
+
+    /**
      * Gets the primary key of an organization by its unique organization identifier.
      * @param organizationIdentifier Organization identifier.
      * @return The primary key of the organization.
@@ -57,7 +71,7 @@ public class OrganizationService extends AbstractService {
     public Integer getPrimaryKey(@Nonnull final String organizationIdentifier) {
         final Integer primaryKey = repository.getPrimaryKey(organizationIdentifier);
         if (primaryKey == null) {
-            throw new NotFoundException("Organization wih identifier: " + organizationIdentifier + ", not found");
+            throw new NotFoundException("Organization with identifier: " + organizationIdentifier + ", not found");
         }
 
         return primaryKey;

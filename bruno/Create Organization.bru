@@ -1,0 +1,24 @@
+meta {
+  name: Create Organization
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:8080/organizations
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "organizationIdentifier": "EU",
+      "name": "European Union",
+      "description": "European Union",
+      "url": "https://european-union.europa.eu/index_en"
+    }
+}
+
+settings {
+  encodeUrl: true
+}

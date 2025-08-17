@@ -151,8 +151,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/Person'
   /organizations:
+    post:
+      summary: Creates an organization that presumably is a Nobel Prize laureate
+      operationId: createOrganization
+      requestBody:
+        description: Organization data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+      responses:
+        "201":
+          description: Created
     get:
-      summary: Get all organizations
+      summary: Get all organizations corresponding to the following selection criteria
+      operationId: getOrganizations
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Beginning of the name of the organization.
       responses:
         '200':
           description: List of organizations
@@ -161,7 +182,25 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Organization'
+                  $ref: '#/components/schemas/Person'
+  /organizations/{id}:
+    get:
+      summary: Get a single organization by its organization identifier
+      operationId: getOrganization
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Organization identifier
+      responses:
+        '200':
+          description: Single organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
   /countries:
     get:
       summary: Get all countries
