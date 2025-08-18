@@ -251,6 +251,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NobelPrizeLaureateCreate'
+      required:
+        - type
+        - category
+        - year
+        - laureates
     NobelPrize:
       type: object
       properties:
@@ -308,6 +313,10 @@ components:
           type: integer
           minimum: 1
           maximum: 100
+      required:
+        - type
+        - fractionNominator
+        - fractionDenominator
     NobelPrizeLaureate:
       type: object
       properties:

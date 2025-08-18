@@ -100,6 +100,7 @@ public class NobelPrizeValidatorImpl implements ConstraintValidator<NobelPrizeVa
             if (personIdentifier == null) {
                 ((ConstraintValidatorContextImpl)context).addMessageParameter(
                         MESSAGE, "Organizations can't win this Nobel Prize");
+                return false;
             }
             uniqueLaureates.add(laureate.getType().getPersonIdentifier());
         }
