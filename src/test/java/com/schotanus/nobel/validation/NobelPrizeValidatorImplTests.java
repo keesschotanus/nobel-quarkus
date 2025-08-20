@@ -10,6 +10,7 @@ import com.schotanus.nobel.model.NobelPrizeLaureateCreate;
 import com.schotanus.nobel.model.NobelPrizeLaureateCreateType;
 import com.schotanus.nobel.util.NobelPrizeCreateBuilder;
 import com.schotanus.nobel.util.NobelPrizeLaureateCreateBuilder;
+import io.quarkus.test.junit.QuarkusTest;
 import jakarta.validation.ConstraintValidatorContext;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 
+@QuarkusTest
 class NobelPrizeValidatorImplTests {
 
     private static final NobelPrizeCategoryEnum PHYSICS = NobelPrizeCategoryEnum.P;
@@ -25,7 +27,7 @@ class NobelPrizeValidatorImplTests {
 
     private final NobelPrizeValidatorImpl sut = new NobelPrizeValidatorImpl();
 
-    ConstraintValidatorContext context = mock(ConstraintValidatorContextImpl.class);
+    private final ConstraintValidatorContext context = mock(ConstraintValidatorContextImpl.class);
 
     @Test
     void validLaureatesShouldPass() {
