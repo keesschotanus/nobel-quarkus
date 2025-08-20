@@ -117,7 +117,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
                 <configuration>
-                    <systemPropertyVariables>
+                  <argLine>-javaagent:${settings.localRepository}/org/mockito/mockito-core/5.18.0/mockito-core-5.18.0.jar</argLine>
+                  <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
