@@ -19,10 +19,14 @@ import java.util.Collections;
 import java.util.List;
 
 
+/**
+ * Tests {@link NobelPrizeValidatorImpl}.
+ */
 @QuarkusTest
 class NobelPrizeValidatorImplTests {
 
     private static final NobelPrizeCategoryEnum PHYSICS = NobelPrizeCategoryEnum.P;
+    private static final NobelPrizeCategoryEnum PEACE = NobelPrizeCategoryEnum.PC;
     private static final Integer YEAR = 1902;
 
     private final NobelPrizeValidatorImpl sut = new NobelPrizeValidatorImpl();
@@ -60,19 +64,50 @@ class NobelPrizeValidatorImplTests {
     }
 
     @Test
-    void nonUniqueLaureatesShouldFail() {
+    void nonUniqueLaureatesOfTypePersonShouldFail() {
         final NobelPrizeLaureateCreateType type = NobelPrizeLaureateCreateBuilder.createLaureatePerson("1");
-        final NobelPrizeLaureateCreate laureate = new NobelPrizeLaureateCreateBuilder(type, 2, 1).build();
+        final NobelPrizeLaureateCreate laureate = new NobelPrizeLaureateCreateBuilder(type, 1, 2).build();
 
-        final NobelPrizeCreate nobelPrize = new NobelPrizeCreateBuilder(NobelPrizeCategoryEnum.P, 1902, List.of(laureate,
+        final NobelPrizeCreate nobelPrize = new NobelPrizeCreateBuilder(PHYSICS, YEAR, List.of(laureate,
                 laureate)).build();
 
         assertFalse(sut.isValid(nobelPrize, context));
     }
 
     @Test
+    void nonUniqueLaureatesOfTypeOrganizationShouldFail() {
+        final NobelPrizeLaureateCreateType type = NobelPrizeLaureateCreateBuilder.createLaureateOrganization("1");
+        final NobelPrizeLaureateCreate laureate = new NobelPrizeLaureateCreateBuilder(type, 1, 2).build();
+
+        final NobelPrizeCreate nobelPrize = new NobelPrizeCreateBuilder(PEACE, YEAR, List.of(laureate, laureate)).build();
+
+        assertFalse(sut.isValid(nobelPrize, context));
+    }
+
+    @Test
+    void laureateWithoutIdentifierShouldFail() {
+        final NobelPrizeLaureateCreateType personType = NobelPrizeLaureateCreateBuilder.createLaureatePerson(null);
+        final NobelPrizeLaureateCreate laureateOfTypePerson  = new NobelPrizeLaureateCreateBuilder(
+                personType, 1, 1).build();
+
+        final NobelPrizeCreate nobelPrizeOne = new NobelPrizeCreateBuilder(
+                NobelPrizeCategoryEnum.P, YEAR, List.of(laureateOfTypePerson)).build();
+
+        assertFalse(sut.isValid(nobelPrizeOne, context));
+
+        final NobelPrizeLaureateCreateType organizationType = NobelPrizeLaureateCreateBuilder.createLaureateOrganization(null);
+        final NobelPrizeLaureateCreate laureateOfTypeOrganization  = new NobelPrizeLaureateCreateBuilder(
+                organizationType, 1, 1).build();
+
+        final NobelPrizeCreate nobelPrizeTwo = new NobelPrizeCreateBuilder(
+                NobelPrizeCategoryEnum.P, YEAR, List.of(laureateOfTypeOrganization)).build();
+        assertFalse(sut.isValid(nobelPrizeTwo, context));
+    }
+
+
+    @Test
     void invalidNumberOfLaureatesShouldFail() {
-        // Test with too few
+        // Test with empty list of laureates
         final NobelPrizeCreate nobelPrize = new NobelPrizeCreateBuilder(PHYSICS, YEAR, Collections.emptyList()).build();
         assertFalse(sut.isValid(nobelPrize, context));
 

@@ -110,6 +110,7 @@ paths:
           required: false
           schema:
             type: string
+            pattern: ^[A-Z]{2}$
           description: Code of country where the person was born
         - name: yearOfBirth
           in: query
@@ -371,6 +372,7 @@ components:
           type: string
           minLength: 2
           maxLength: 2
+          pattern: ^[A-Z]{2}$
         deathDate:
           type: string
           format: date
@@ -391,7 +393,7 @@ components:
           type: integer
           readOnly: true
       required:
-        - identifier
+        - personIdentifier
         - name
         - birthDate
         - birthCountryCode
@@ -428,6 +430,7 @@ components:
           type: string
           minLength: 2
           maxLength: 2
+          pattern: ^[A-Z]{2}$
         name:
           type: string
         nationality:

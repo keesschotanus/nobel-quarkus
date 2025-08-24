@@ -5,6 +5,7 @@ import static com.schotanus.nobel.tables.Person.PERSON;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.upper;
 
+import com.schotanus.nobel.Tables;
 import com.schotanus.nobel.model.Person;
 import com.schotanus.nobel.service.CountryService;
 import jakarta.annotation.Nonnull;
@@ -145,4 +146,7 @@ public class PersonRepository {
             .fetchInto(Person.class);
     }
 
+    public void deletePersonsWithTestIdentifiers() {
+        dsl.delete(Tables.PERSON).where(PERSON.PERSONIDENTIFIER.like("test%")).execute();
+    }
 }
