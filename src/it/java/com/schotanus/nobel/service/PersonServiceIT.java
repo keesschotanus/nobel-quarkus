@@ -15,11 +15,11 @@ import org.junit.jupiter.api.Test;
  * Tests {@link PersonService} methods that are not part of {@link PersonApiImpl}.
  */
 @QuarkusTest
-class PersonServiceTests {
+class PersonServiceIT {
 
     private final PersonService service;
 
-    PersonServiceTests(PersonService service) {
+    PersonServiceIT(PersonService service) {
             this.service = service;
         }
 

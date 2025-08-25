@@ -13,11 +13,11 @@ import org.junit.jupiter.api.Test;
  * Tests {@link CountryService}.
  */
 @QuarkusTest
-class CountryServiceTests {
+class CountryServiceIT {
 
     private final CountryService service;
 
-    CountryServiceTests(CountryService service) {
+    CountryServiceIT(CountryService service) {
         this.service = service;
 
     }

@@ -28,11 +28,11 @@ import java.util.List;
 @QuarkusTest
 @TestHTTPEndpoint(PersonApiImpl.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PersonApiImplTests {
+class PersonApiImplIT {
 
     private final PersonService service;
 
-    PersonApiImplTests(PersonService service) {
+    PersonApiImplIT(PersonService service) {
         this.service = service;
     }
 
