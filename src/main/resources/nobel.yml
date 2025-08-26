@@ -403,6 +403,8 @@ components:
         organizationIdentifier:
           type: string
           description: Uniquely identifies a single organization
+          minLength: 1
+          maxLength: 50
         name:
           type: string
         description:
@@ -423,6 +425,9 @@ components:
         lastModifiedById:
           type: integer
           readOnly: true
+      required:
+        - organizationIdentifier
+        - name
     Country:
       type: object
       properties:

@@ -6,7 +6,10 @@ import io.quarkus.logging.Log;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityExistsException;
+import jakarta.ws.rs.ClientErrorException;
 import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -31,9 +34,13 @@ public class OrganizationService extends AbstractService {
      */
     @Nonnull
     public String createOrganization(@Nonnull final Organization organization) {
-        Integer id = repository.createOrganization(organization);
-        Log.info("Organization created with id:" + id);
-        return getBaseUrl() + "organizations/" + organization.getOrganizationIdentifier();
+        try {
+            Integer id = repository.createOrganization(organization);
+            Log.info("Organization created with id:" + id);
+            return getBaseUrl() + "organizations/" + organization.getOrganizationIdentifier();
+        } catch(EntityExistsException exception) {
+            throw new ClientErrorException("This organization already exists", Response.Status.CONFLICT);
+        }
     }
 
     /**

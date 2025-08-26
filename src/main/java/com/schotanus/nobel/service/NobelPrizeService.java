@@ -8,6 +8,9 @@ import io.quarkus.logging.Log;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityExistsException;
+import jakarta.ws.rs.ClientErrorException;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -31,9 +34,13 @@ public class NobelPrizeService extends AbstractService {
      */
     @Nonnull
     public String createNobelPrize(@Nonnull @NobelPrizeValidator final NobelPrizeCreate nobelPrize) {
-        Integer id = repository.createNobelPrize(nobelPrize);
-        Log.info("Nobel Prize created with id:" + id);
-        return getBaseUrl() + "nobelprizes/" + nobelPrize.getYear()  + "/" + nobelPrize.getCategory();
+        try {
+            Integer id = repository.createNobelPrize(nobelPrize);
+            Log.info("Nobel Prize created with id:" + id);
+            return getBaseUrl() + "nobelprizes/" + nobelPrize.getYear()  + "/" + nobelPrize.getCategory();
+        } catch(EntityExistsException exception) {
+            throw new ClientErrorException("This Nobel Prize already exists", Response.Status.CONFLICT);
+        }
     }
 
     /**

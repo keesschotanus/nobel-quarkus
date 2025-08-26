@@ -6,7 +6,10 @@ import io.quarkus.logging.Log;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityExistsException;
+import jakarta.ws.rs.ClientErrorException;
 import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -32,9 +35,13 @@ public class PersonService extends AbstractService {
      */
     @Nonnull
     public String createPerson(@Nonnull final Person person) {
-        Integer id = repository.createPerson(person);
-        Log.info("Person created with id:" + id);
-        return getBaseUrl() + "persons/" + person.getPersonIdentifier();
+        try {
+            Integer id = repository.createPerson(person);
+            Log.info("Person created with id:" + id);
+            return getBaseUrl() + "persons/" + person.getPersonIdentifier();
+        } catch(EntityExistsException exception) {
+            throw new ClientErrorException("This person already exists", Response.Status.CONFLICT);
+        }
     }
 
     /**

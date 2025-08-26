@@ -5,15 +5,16 @@ import static com.schotanus.nobel.tables.Person.PERSON;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.upper;
 
-import com.schotanus.nobel.Tables;
 import com.schotanus.nobel.model.Person;
 import com.schotanus.nobel.service.CountryService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityExistsException;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.exception.IntegrityConstraintViolationException;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -55,30 +56,34 @@ public class PersonRepository {
     public Integer createPerson(@Nonnull final Person person) {
         Integer countryId = countryService.getPrimaryKeyOfCountry(person.getBirthCountryCode());
 
-        return dsl.insertInto(PERSON).columns(
-            PERSON.PERSONIDENTIFIER,
-            PERSON.NAME,
-            PERSON.DISPLAYNAME,
-            PERSON.DESCRIPTION,
-            PERSON.BIRTHDATE,
-            PERSON.BIRTHCOUNTRYID,
-            PERSON.DEATHDATE,
-            PERSON.URL,
-            PERSON.CREATEDBYID,
-            PERSON.LASTMODIFIEDBYID)
-        .values(
-            person.getPersonIdentifier(),
-            person.getName(),
-            person.getDisplayName(),
-            person.getDescription(),
-            person.getBirthDate(),
-            countryId,
-            person.getDeathDate(),
-            person.getUrl(),
-            1,
-            1)
-        .returningResult(PERSON.ID)
-        .fetch().getFirst().value1();
+        try {
+            return dsl.insertInto(PERSON).columns(
+                PERSON.PERSONIDENTIFIER,
+                PERSON.NAME,
+                PERSON.DISPLAYNAME,
+                PERSON.DESCRIPTION,
+                PERSON.BIRTHDATE,
+                PERSON.BIRTHCOUNTRYID,
+                PERSON.DEATHDATE,
+                PERSON.URL,
+                PERSON.CREATEDBYID,
+                PERSON.LASTMODIFIEDBYID)
+            .values(
+                person.getPersonIdentifier(),
+                person.getName(),
+                person.getDisplayName(),
+                person.getDescription(),
+                person.getBirthDate(),
+                countryId,
+                person.getDeathDate(),
+                person.getUrl(),
+                1,
+                1)
+            .returningResult(PERSON.ID)
+            .fetch().getFirst().value1();
+        } catch (IntegrityConstraintViolationException exception) {
+            throw new EntityExistsException("This person already exists");
+        }
     }
 
     /**
@@ -144,9 +149,5 @@ public class PersonRepository {
             .where(condition)
             .orderBy(PERSON.DISPLAYNAME)
             .fetchInto(Person.class);
-    }
-
-    public void deletePersonsWithTestIdentifiers() {
-        dsl.delete(Tables.PERSON).where(PERSON.PERSONIDENTIFIER.like("test%")).execute();
     }
 }

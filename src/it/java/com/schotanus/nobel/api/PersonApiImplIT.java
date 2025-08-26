@@ -5,12 +5,14 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.schotanus.nobel.DataHelper;
 import com.schotanus.nobel.model.Person;
 import com.schotanus.nobel.service.PersonService;
 import com.schotanus.nobel.util.PersonBuilder;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -29,9 +31,16 @@ import java.util.List;
 class PersonApiImplIT {
 
     private final PersonService service;
+    private final DataHelper dataHelper;
 
-    PersonApiImplIT(PersonService service) {
+    PersonApiImplIT(PersonService service, DataHelper dataHelper) {
         this.service = service;
+        this.dataHelper = dataHelper;
+    }
+
+    @AfterAll
+    void cleanUp() {
+        dataHelper.deletePersonsWithTestIdentifiers();
     }
 
     /**
@@ -60,6 +69,31 @@ class PersonApiImplIT {
             .post()
             .then()
             .statusCode(HttpURLConnection.HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * Tests {@link PersonApiImpl#createPerson(Person)}.
+     */
+    @Test
+    void createExistingPersonShouldFail() {
+        // First create a new person
+        Person person = new PersonBuilder().build();
+        given()
+            .contentType("application/json")
+            .body(person)
+            .when()
+            .post()
+            .then()
+            .statusCode(HttpURLConnection.HTTP_CREATED);
+
+        // Now try to create the same person again
+        given()
+            .contentType("application/json")
+            .body(person)
+            .when()
+            .post()
+            .then()
+            .statusCode(HttpURLConnection.HTTP_CONFLICT);
     }
 
     /**
@@ -141,6 +175,9 @@ class PersonApiImplIT {
 
         assertNotNull(foundPersons);
         assertEquals(1, foundPersons.size());
+
+        final Person foundPerson = foundPersons.getFirst();
+        assertEquals(person.getPersonIdentifier(), foundPerson.getPersonIdentifier());
     }
 
     /**
@@ -169,6 +206,9 @@ class PersonApiImplIT {
 
         assertNotNull(foundPersons);
         assertEquals(1, foundPersons.size());
+
+        final Person foundPerson = foundPersons.getFirst();
+        assertEquals(person.getPersonIdentifier(), foundPerson.getPersonIdentifier());
     }
 
     /**

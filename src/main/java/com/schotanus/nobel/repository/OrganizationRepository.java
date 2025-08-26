@@ -8,9 +8,11 @@ import com.schotanus.nobel.model.Organization;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityExistsException;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.exception.IntegrityConstraintViolationException;
 
 import java.util.List;
 
@@ -41,22 +43,26 @@ public class OrganizationRepository {
      */
     @Nonnull
     public Integer createOrganization(@Nonnull final Organization organization) {
-        return dsl.insertInto(ORGANIZATION).columns(
-            ORGANIZATION.ORGANIZATIONIDENTIFIER,
-            ORGANIZATION.NAME,
-            ORGANIZATION.DESCRIPTION,
-            ORGANIZATION.URL,
-            ORGANIZATION.CREATEDBYID,
-            ORGANIZATION.LASTMODIFIEDBYID)
-        .values(
-            organization.getOrganizationIdentifier(),
-            organization.getName(),
-            organization.getDescription(),
-            organization.getUrl(),
-            1,
-            1)
-        .returningResult(ORGANIZATION.ID)
-        .fetch().getFirst().value1();
+        try {
+            return dsl.insertInto(ORGANIZATION).columns(
+                ORGANIZATION.ORGANIZATIONIDENTIFIER,
+                ORGANIZATION.NAME,
+                ORGANIZATION.DESCRIPTION,
+                ORGANIZATION.URL,
+                ORGANIZATION.CREATEDBYID,
+                ORGANIZATION.LASTMODIFIEDBYID)
+            .values(
+                organization.getOrganizationIdentifier(),
+                organization.getName(),
+                organization.getDescription(),
+                organization.getUrl(),
+                1,
+                1)
+            .returningResult(ORGANIZATION.ID)
+            .fetch().getFirst().value1();
+        } catch (IntegrityConstraintViolationException exception) {
+            throw new EntityExistsException("This organization already exists");
+        }
     }
 
     /**
