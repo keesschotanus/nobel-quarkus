@@ -18,6 +18,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.net.HttpURLConnection;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -159,7 +160,12 @@ class OrganizationApiImplIT {
      */
     @Test()
     void gettingAllOrganizationsWithExistingNameShouldPass() {
-        final Organization organization = new OrganizationBuilder().build();
+        int randomInt = new Random().nextInt(10000);
+        final Organization organization = new OrganizationBuilder("testIdentifier" + randomInt, "name" + randomInt)
+                .description("description" + randomInt)
+                .url("url" + randomInt)
+                .build();
+
         service.createOrganization(organization);
 
         // Find all organizations
@@ -177,6 +183,8 @@ class OrganizationApiImplIT {
         final Organization foundOrganisation = foundOrganizations.getFirst();
         assertEquals(organization.getOrganizationIdentifier(), foundOrganisation.getOrganizationIdentifier());
         assertEquals(organization.getName(), foundOrganisation.getName());
+        assertEquals(organization.getDescription(), foundOrganisation.getDescription());
+        assertEquals(organization.getUrl(), foundOrganisation.getUrl());
     }
 
     /**

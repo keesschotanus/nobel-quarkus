@@ -13,18 +13,10 @@ public class NobelPrizeCreateBuilder {
     private final Integer year;
     private final List<NobelPrizeLaureateCreate> laureates;
 
-    // Optional fields
-    private String url;
-
     public NobelPrizeCreateBuilder(NobelPrizeCategoryEnum category, Integer year, List<NobelPrizeLaureateCreate> laureates) {
         this.category = category;
         this.year = year;
         this.laureates = List.copyOf(laureates);
-    }
-
-    public NobelPrizeCreateBuilder url(String url) {
-        this.url = url;
-        return this;
     }
 
     public NobelPrizeCreate build() {

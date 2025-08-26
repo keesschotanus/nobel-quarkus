@@ -19,7 +19,9 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.net.HttpURLConnection;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -185,11 +187,17 @@ class PersonApiImplIT {
      */
     @Test()
     void gettingAllPersonsByAllQueryParametersShouldPass() {
-        final Person person = new PersonBuilder()
-                .deathDate(LocalDate.now())
-                .url("http://somewhere.com")
-                .description("Description")
-                .build();
+        int randomInt = new Random().nextInt(1000);
+        final Person person = new PersonBuilder(
+                "testIdentifier" + randomInt,
+                "testName" + randomInt,
+                LocalDate.of(1900, Month.SEPTEMBER, 29),
+                "NL")
+            .deathDate(LocalDate.now())
+            .url("http://somewhere.com")
+            .description("Description")
+            .displayName("testDisplay" + randomInt)
+            .build();
         service.createPerson(person);
 
         // Find the persons with the supplied name
@@ -209,6 +217,12 @@ class PersonApiImplIT {
 
         final Person foundPerson = foundPersons.getFirst();
         assertEquals(person.getPersonIdentifier(), foundPerson.getPersonIdentifier());
+        assertEquals(person.getName(), foundPerson.getName());
+        assertEquals(person.getDisplayName(), foundPerson.getDisplayName());
+        assertEquals(person.getBirthDate(), foundPerson.getBirthDate());
+        assertEquals(person.getDeathDate(), foundPerson.getDeathDate());
+        assertEquals(person.getDescription(), foundPerson.getDescription());
+        assertEquals(person.getUrl(), foundPerson.getUrl());
     }
 
     /**
