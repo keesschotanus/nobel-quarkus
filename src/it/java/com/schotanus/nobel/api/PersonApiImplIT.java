@@ -4,7 +4,6 @@ package com.schotanus.nobel.api;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.schotanus.nobel.model.Person;
 import com.schotanus.nobel.service.PersonService;
@@ -12,7 +11,6 @@ import com.schotanus.nobel.util.PersonBuilder;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
-import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -72,7 +70,15 @@ class PersonApiImplIT {
         final Person person = new PersonBuilder().build();
         service.createPerson(person);
 
-        assertNotNull(service.getPerson(person.getPersonIdentifier()));
+        Person foundPerson = given()
+            .when()
+            .pathParam("id", person.getPersonIdentifier())
+            .get("{id}")
+            .then()
+            .statusCode(HttpURLConnection.HTTP_OK)
+            .extract().as(Person.class);
+
+        assertNotNull(foundPerson);
     }
 
     /**
@@ -80,7 +86,12 @@ class PersonApiImplIT {
      */
     @Test
     void getNonExistingPersonByIdShouldFail() {
-        assertThrows(NotFoundException.class, () -> service.getPerson("unknown"));
+        given()
+            .when()
+            .pathParam("id", "Unknown")
+            .get("{id}")
+            .then()
+            .statusCode(HttpURLConnection.HTTP_NOT_FOUND);
     }
 
     /**
