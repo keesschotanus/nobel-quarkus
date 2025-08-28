@@ -253,7 +253,6 @@ components:
           items:
             $ref: '#/components/schemas/NobelPrizeLaureateCreate'
       required:
-        - type
         - category
         - year
         - laureates

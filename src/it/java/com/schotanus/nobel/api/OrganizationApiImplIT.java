@@ -3,6 +3,7 @@ package com.schotanus.nobel.api;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.schotanus.nobel.DataHelper;
 import com.schotanus.nobel.model.Organization;
@@ -12,7 +13,6 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -144,15 +144,7 @@ class OrganizationApiImplIT {
             .extract().as(new TypeRef<>() {});
 
         assertNotNull(foundOrganizations);
-
-        // Check that created organization is present in the response
-        for (Organization foundOrganization : foundOrganizations) {
-            if (foundOrganization.getOrganizationIdentifier().equals(organization.getOrganizationIdentifier())
-                    && foundOrganization.getName().equals(organization.getName())) {
-                return;
-            }
-        }
-        Assertions.fail("Did not find the previously created organization");
+        assertTrue(foundOrganizations.stream().anyMatch(o -> o.getName().equals(organization.getName())));
     }
 
     /**

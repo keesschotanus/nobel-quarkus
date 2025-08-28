@@ -4,6 +4,7 @@ package com.schotanus.nobel.api;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.schotanus.nobel.DataHelper;
 import com.schotanus.nobel.model.Person;
@@ -13,7 +14,6 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -147,15 +147,7 @@ class PersonApiImplIT {
             .extract().as(new TypeRef<>() {});
 
         assertNotNull(foundPersons);
-
-        // Check that created person is present in the response
-        for (Person foundPerson : foundPersons) {
-            if (foundPerson.getDisplayName().equals(person.getDisplayName())) {
-                return;
-            }
-        }
-
-        Assertions.fail("Did not find the previously created person");
+        assertTrue(foundPersons.stream().anyMatch(p -> p.getDisplayName().equals(person.getDisplayName())));
     }
 
     /**
@@ -168,12 +160,12 @@ class PersonApiImplIT {
 
         // Find the persons with the supplied name
         List<Person> foundPersons = given()
-                .when()
-                .queryParam("name", person.getDisplayName())
-                .get()
-                .then()
-                .statusCode(HttpURLConnection.HTTP_OK)
-                .extract().as(new TypeRef<>() {});
+            .when()
+            .queryParam("name", person.getDisplayName())
+            .get()
+            .then()
+            .statusCode(HttpURLConnection.HTTP_OK)
+            .extract().as(new TypeRef<>() {});
 
         assertNotNull(foundPersons);
         assertEquals(1, foundPersons.size());
@@ -202,15 +194,15 @@ class PersonApiImplIT {
 
         // Find the persons with the supplied name
         List<Person> foundPersons = given()
-                .when()
-                .queryParam("name", person.getDisplayName())
-                .queryParam("countryCode", person.getBirthCountryCode())
-                .queryParam("yearOfBirth", person.getBirthDate().getYear())
-                .queryParam("yearOfDeath", person.getDeathDate() == null ? "" : person.getDeathDate().getYear())
-                .get()
-                .then()
-                .statusCode(HttpURLConnection.HTTP_OK)
-                .extract().as(new TypeRef<>() {});
+            .when()
+            .queryParam("name", person.getDisplayName())
+            .queryParam("countryCode", person.getBirthCountryCode())
+            .queryParam("yearOfBirth", person.getBirthDate().getYear())
+            .queryParam("yearOfDeath", person.getDeathDate() == null ? "" : person.getDeathDate().getYear())
+            .get()
+            .then()
+            .statusCode(HttpURLConnection.HTTP_OK)
+            .extract().as(new TypeRef<>() {});
 
         assertNotNull(foundPersons);
         assertEquals(1, foundPersons.size());

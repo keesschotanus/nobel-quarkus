@@ -5,6 +5,7 @@ import com.schotanus.nobel.model.NobelPrizeCreate;
 import com.schotanus.nobel.model.NobelPrizeLaureate;
 import com.schotanus.nobel.model.NobelPrizeLaureateCreate;
 import com.schotanus.nobel.model.Person;
+import com.schotanus.nobel.service.NobelPrizeCategoryService;
 import com.schotanus.nobel.service.OrganizationService;
 import com.schotanus.nobel.service.PersonService;
 import jakarta.annotation.Nonnull;
@@ -34,11 +35,14 @@ import static org.jooq.impl.DSL.trueCondition;
 public class NobelPrizeRepository {
 
     private final DSLContext dsl;
+    private final NobelPrizeCategoryService nobelPrizeCategoryService;
     private final PersonService personService;
     private final OrganizationService organizationService;
 
-    NobelPrizeRepository(DSLContext dsl, PersonService personService, OrganizationService organizationService) {
+    NobelPrizeRepository(DSLContext dsl, NobelPrizeCategoryService nobelPrizeCategoryService, PersonService personService,
+            OrganizationService organizationService) {
         this.dsl = dsl;
+        this.nobelPrizeCategoryService = nobelPrizeCategoryService;
         this.personService = personService;
         this.organizationService = organizationService;
     }
@@ -53,6 +57,8 @@ public class NobelPrizeRepository {
     @Transactional(Transactional.TxType.REQUIRED)
     @Nonnull
     public Integer createNobelPrize(final @Nonnull NobelPrizeCreate nobelPrize) {
+        Integer nobelPrizeCategoryId = nobelPrizeCategoryService.getPrimaryKey(nobelPrize.getCategory());
+
         // Insert the Nobel Prize
         Integer nobelPrizeId;
         try {
@@ -63,7 +69,7 @@ public class NobelPrizeRepository {
                     NOBEL_PRIZE.URL,
                     NOBEL_PRIZE.CREATEDBYID,
                     NOBEL_PRIZE.LASTMODIFIEDBYID)
-                .values(1, nobelPrize.getYear(), nobelPrize.getUrl(), 1, 1)
+                .values(nobelPrizeCategoryId, nobelPrize.getYear(), nobelPrize.getUrl(), 1, 1)
                 .returningResult(NOBEL_PRIZE.ID)
                 .fetch().getFirst().value1();
 

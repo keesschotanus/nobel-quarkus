@@ -1,6 +1,7 @@
 package com.schotanus.nobel.service;
 
 import com.schotanus.nobel.model.NobelPrizeCategory;
+import com.schotanus.nobel.model.NobelPrizeCategoryEnum;
 import com.schotanus.nobel.repository.NobelPrizeCategoryRepository;
 import jakarta.annotation.Nonnull;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -32,10 +33,27 @@ public class NobelPrizeCategoryService {
     public NobelPrizeCategory getNobelPrizeCategory(@Nonnull final String code) {
         NobelPrizeCategory category = repository.getNobelPrizeCategory(code);
         if (category == null) {
-            throw new NotFoundException("Category: " + code + ", not found");
+            throw new NotFoundException("Nobel Prize category: " + code + ", not found");
         }
         
         return category;
+    }
+
+    /**
+     * Gets the primary key of a Nobel Prize category.
+     *
+     * @param nobelPrizeCategory Category for which the primary key must be fetched.
+     * @return The primary key of the Nobel Prize category.
+     * @throws NotFoundException When the supplied category does not exist.
+     */
+    @Nonnull
+    public Integer getPrimaryKey(@Nonnull final NobelPrizeCategoryEnum nobelPrizeCategory) {
+        final Integer primaryKey = repository.getPrimaryKey(nobelPrizeCategory);
+        if (primaryKey == null) {
+            throw new NotFoundException("Nobel prize category: " + nobelPrizeCategory + ", not found");
+        }
+
+        return primaryKey;
     }
 
     /**

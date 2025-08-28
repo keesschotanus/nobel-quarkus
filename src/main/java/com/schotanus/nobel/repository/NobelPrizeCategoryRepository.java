@@ -1,6 +1,7 @@
 package com.schotanus.nobel.repository;
 
 import com.schotanus.nobel.model.NobelPrizeCategory;
+import com.schotanus.nobel.model.NobelPrizeCategoryEnum;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -36,6 +37,20 @@ public class NobelPrizeCategoryRepository {
             .from(NOBEL_PRIZE_CATEGORY)
             .where(NOBEL_PRIZE_CATEGORY.CODE.eq(code))
             .fetchOneInto(NobelPrizeCategory.class);
+    }
+
+    /**
+     * Gets the primary key of a Nobel Prize category.
+     *
+     * @param nobelPrizeCategory Category for which the primary key must be fetched.
+     * @return The primary key of the Nobel Prize category or null when not found.
+     */
+    @Nullable
+    public Integer getPrimaryKey(@Nonnull NobelPrizeCategoryEnum nobelPrizeCategory) {
+        return dsl.select(NOBEL_PRIZE_CATEGORY.ID)
+            .from(NOBEL_PRIZE_CATEGORY)
+            .where(NOBEL_PRIZE_CATEGORY.CODE.eq(nobelPrizeCategory.name()))
+            .fetchOneInto(Integer.class);
     }
 
     /**
