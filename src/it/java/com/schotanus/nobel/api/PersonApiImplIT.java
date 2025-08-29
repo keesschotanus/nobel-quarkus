@@ -227,16 +227,54 @@ class PersonApiImplIT {
 
         // Find the persons with the supplied name
         List<Person> foundPersons = given()
-                .when()
-                .queryParam("yearOfDeath", "1648")
-                .get()
-                .then()
-                .statusCode(HttpURLConnection.HTTP_OK)
-                .extract().as(new TypeRef<>() {
-                });
+            .when()
+            .queryParam("yearOfDeath", "1648")
+            .get()
+            .then()
+            .statusCode(HttpURLConnection.HTTP_OK)
+            .extract().as(new TypeRef<>() {
+        });
 
         assertNotNull(foundPersons);
         assertEquals(0, foundPersons.size());
+    }
+
+    /**
+     * Tests {@link PersonApiImpl#updatePerson(Person)}.
+     */
+    @Test()
+    void updateExistingPersonShouldPass() {
+        final Person person = new PersonBuilder().build();
+        service.createPerson(person);
+
+        // Update the previously created person
+        person.setName(person.getName() + "Updated");
+        final Person updatedPerson = given()
+            .contentType("application/json")
+            .body(person)
+            .when()
+            .put()
+            .then()
+            .statusCode(HttpURLConnection.HTTP_OK)
+            .extract().as(Person.class);
+
+        assertEquals(person.getName(), updatedPerson.getName());
+    }
+
+    /**
+     * Tests {@link PersonApiImpl#updatePerson(Person)}.
+     */
+    @Test()
+    void updateNonExistingPersonShouldFail() {
+        final Person person = new PersonBuilder().build();
+
+        given()
+            .contentType("application/json")
+            .body(person)
+            .when()
+            .put()
+            .then()
+            .statusCode(HttpURLConnection.HTTP_NOT_FOUND);
     }
 
 }

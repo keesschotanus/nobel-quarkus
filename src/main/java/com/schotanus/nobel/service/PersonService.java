@@ -7,6 +7,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityExistsException;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.ClientErrorException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
@@ -34,7 +35,7 @@ public class PersonService extends AbstractService {
      * @return URL to access the created person.
      */
     @Nonnull
-    public String createPerson(@Nonnull final Person person) {
+    public String createPerson(@Nonnull @Valid final Person person) {
         try {
             Integer id = repository.createPerson(person);
             Log.info("Person created with id:" + id);
@@ -94,6 +95,22 @@ public class PersonService extends AbstractService {
             @Nullable Integer yearOfBirth,
             @Nullable Integer yearOfDeath) {
         return repository.getPersons(name, countryCode, yearOfBirth, yearOfDeath);
+    }
+
+    /**
+     * Updates an existing person in the database.
+     *
+     * @param person Model to update the person record with.
+     * @return The updated person.
+     * @throws NotFoundException When the person to be updated could not be found.
+     */
+    public Person updatePerson(@Nonnull @Valid final Person person) {
+        boolean updated = repository.updatePerson(person);
+        if (!updated) {
+            throw new NotFoundException("Person wih identifier: " + person.getPersonIdentifier() + ", not found");
+        }
+
+        return repository.getPerson(person.getPersonIdentifier());
     }
 
 }

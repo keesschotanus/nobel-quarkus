@@ -2,8 +2,10 @@ package com.schotanus.nobel.api;
 
 import com.schotanus.nobel.model.Person;
 import com.schotanus.nobel.service.PersonService;
-import jakarta.annotation.Nonnull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.Response;
+
 
 import java.net.URI;
 
@@ -20,12 +22,12 @@ public class PersonApiImpl implements PersonsApi {
     }
 
     @Override
-    public Response createPerson(@Nonnull final Person person) {
+    public Response createPerson(@NotNull @Valid final Person person) {
         return Response.created(URI.create(service.createPerson(person))).build();
     }
 
     @Override
-    public Response getPerson(@Nonnull final String id) {
+    public Response getPerson(final String id) {
         return Response.ok(service.getPerson(id)).build();
     }
 
@@ -34,4 +36,8 @@ public class PersonApiImpl implements PersonsApi {
         return Response.ok(service.getPersons(name, countryCode, yearOfBirth, yearOfDeath)).build();
     }
 
+    @Override
+    public Response updatePerson(@NotNull @Valid Person person) {
+        return Response.ok(service.updatePerson(person)).build();
+    }
 }

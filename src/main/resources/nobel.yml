@@ -95,6 +95,19 @@ paths:
       responses:
         "201":
           description: Created
+    put:
+      summary: Updates a person
+      operationId: updatePerson
+      requestBody:
+        description: Person data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Person'
+      responses:
+        "200":
+          description: Updated
     get:
       summary: Get all persons corresponding to the following selection criteria
       operationId: getPersons

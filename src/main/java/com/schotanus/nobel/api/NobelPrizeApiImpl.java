@@ -2,8 +2,9 @@ package com.schotanus.nobel.api;
 
 import com.schotanus.nobel.model.NobelPrizeCreate;
 import com.schotanus.nobel.service.NobelPrizeService;
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
@@ -21,7 +22,7 @@ public class NobelPrizeApiImpl implements NobelprizesApi {
     }
 
     @Override
-    public Response createNobelPrize(@Nonnull NobelPrizeCreate nobelPrize) {
+    public Response createNobelPrize(@NotNull @Valid NobelPrizeCreate nobelPrize) {
         return Response.created(URI.create(service.createNobelPrize(nobelPrize))).build();
     }
 

@@ -18,6 +18,7 @@ import org.jooq.exception.IntegrityConstraintViolationException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 
@@ -150,4 +151,28 @@ public class PersonRepository {
             .orderBy(PERSON.DISPLAYNAME)
             .fetchInto(Person.class);
     }
+
+    /**
+     * Updates an existing person.
+     * @param person The person to update.
+     * @return True when the person was updated.
+     */
+    public boolean updatePerson(@Nonnull Person person) {
+        int records = dsl.update(PERSON)
+            .set(PERSON.NAME, person.getName())
+            .set(PERSON.DISPLAYNAME, person.getDisplayName())
+            .set(PERSON.DESCRIPTION, person.getDescription())
+            .set(PERSON.BIRTHDATE, person.getBirthDate())
+            .set(PERSON.BIRTHCOUNTRYID,
+                dsl.select(COUNTRY.ID).from(COUNTRY).where(COUNTRY.CODE.eq(person.getBirthCountryCode())))
+            .set(PERSON.DEATHDATE, person.getDeathDate())
+            .set(PERSON.URL, person.getUrl())
+            .set(PERSON.LASTMODIFIEDBYID, 1)
+            .set(PERSON.LASTMODIFIEDAT, OffsetDateTime.now())
+            .where(PERSON.PERSONIDENTIFIER.eq(person.getPersonIdentifier()))
+            .execute();
+
+        return records == 1;
+    }
+
 }

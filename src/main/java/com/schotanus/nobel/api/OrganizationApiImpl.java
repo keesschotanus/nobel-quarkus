@@ -2,8 +2,9 @@ package com.schotanus.nobel.api;
 
 import com.schotanus.nobel.model.Organization;
 import com.schotanus.nobel.service.OrganizationService;
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
@@ -21,12 +22,12 @@ public class OrganizationApiImpl implements OrganizationsApi {
     }
 
     @Override
-    public Response createOrganization(@Nonnull final Organization organization) {
+    public Response createOrganization(@NotNull @Valid final Organization organization) {
         return Response.created(URI.create(service.createOrganization(organization))).build();
     }
 
     @Override
-    public Response getOrganization(@Nonnull final String id) {
+    public Response getOrganization(final String id) {
         return Response.ok(service.getOrganization(id)).build();
     }
 
